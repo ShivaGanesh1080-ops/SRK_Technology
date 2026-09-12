@@ -1,4 +1,4 @@
-﻿import React from "react";
+import React from "react";
 import { ShieldCheck } from "lucide-react";
 
 export function PremiumCertificate({ 
@@ -55,23 +55,23 @@ export function PremiumCertificate({
           </div>
 
           {/* Body */}
-          <div className="flex-1 flex flex-col justify-center w-full max-w-4xl z-10">
-            <p className="text-lg md:text-xl italic mb-6" style={{ color: "#475569", fontFamily: "'Georgia', serif" }}>
+          <div className="flex-1 flex flex-col justify-center w-full max-w-4xl z-10 py-4">
+            <p className="text-lg md:text-xl italic mb-2" style={{ color: "#475569", fontFamily: "'Georgia', serif" }}>
               This proudly certifies that
             </p>
-            <h2 className="text-5xl md:text-6xl font-bold mb-8 pb-4" style={{ color: "#0f172a", fontFamily: "'Georgia', serif", borderBottom: "1px solid #c5a059" }}>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 pb-2" style={{ color: "#0f172a", fontFamily: "'Georgia', serif", borderBottom: "1px solid #c5a059" }}>
               {studentName}
             </h2>
-            <p className="text-lg md:text-xl italic mb-6" style={{ color: "#475569", fontFamily: "'Georgia', serif" }}>
+            <p className="text-lg md:text-xl italic mb-4" style={{ color: "#475569", fontFamily: "'Georgia', serif" }}>
               has successfully completed the comprehensive training and requirements for
             </p>
-            <h3 className="text-3xl md:text-4xl font-bold uppercase px-8" style={{ color: "#0f172a", fontFamily: "'Cinzel', 'Times New Roman', serif" }}>
+            <h3 className="text-2xl md:text-3xl font-bold uppercase px-8 leading-tight" style={{ color: "#0f172a", fontFamily: "'Cinzel', 'Times New Roman', serif" }}>
               {workshopTitle}
             </h3>
           </div>
 
           {/* Footer Signatures */}
-          <div className="w-full max-w-4xl grid grid-cols-3 gap-8 mt-8 pt-8 pb-4 items-end relative z-10">
+          <div className="w-full max-w-4xl grid grid-cols-3 gap-8 mt-4 pt-4 pb-2 items-end relative z-10">
             {/* Left: ID */}
             <div className="flex flex-col items-center">
               <div className="w-48 border-b border-slate-400 mb-2 pb-2">

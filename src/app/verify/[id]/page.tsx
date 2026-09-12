@@ -20,7 +20,7 @@ export default async function PublicCertificatePage({ params }: { params: Promis
   let workshopTitle = "";
   let dateIssued = "";
   let certificateId = "";
-  let instructorName = "SRK TECHNOLOGY";
+  let instructorName = "R. Koteshwar Rao";
 
   if (customCert) {
     studentName = customCert.certificateName;
@@ -58,7 +58,7 @@ export default async function PublicCertificatePage({ params }: { params: Promis
     workshopTitle = registration.workshop.title;
     dateIssued = new Date(registration.updatedAt).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
     certificateId = `SRK-${registration.id}`;
-    instructorName = registration.workshop.trainer?.fullName || "SRK TECHNOLOGY";
+    instructorName = registration.workshop.trainer?.fullName || "R. Koteshwar Rao";
   }
 
   return (
