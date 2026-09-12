@@ -27,6 +27,10 @@ export default async function AdminCertificatesPage({
     orderBy: { createdAt: "desc" }
   });
 
+  const workshops = await prisma.workshop.findMany({
+    orderBy: { createdAt: "desc" }
+  });
+
   return (
     <div className="space-y-8">
       <div>
@@ -46,7 +50,19 @@ export default async function AdminCertificatesPage({
           </div>
           <div>
             <Label htmlFor="workshopTitle">Workshop / Program Title</Label>
-            <Input id="workshopTitle" name="workshopTitle" required />
+            <select
+              id="workshopTitle"
+              name="workshopTitle"
+              required
+              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 mt-1"
+            >
+              <option value="" disabled selected>Select a program...</option>
+              {workshops.map(w => (
+                <option key={w.id} value={`${w.title} (${w.duration})`}>
+                  {w.title} ({w.duration})
+                </option>
+              ))}
+            </select>
           </div>
           <Button type="submit" className="w-full">Generate Certificate</Button>
         </form>
