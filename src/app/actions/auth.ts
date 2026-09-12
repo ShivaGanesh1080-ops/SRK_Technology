@@ -28,7 +28,13 @@ export async function login(formData: FormData) {
   if (authData.user) {
     const user = authData.user;
     
-    const superAdmins = ['shivaganesh1080@gmail.com', 'koteshwarraoravipati@gmail.com', 'labeebstar12@gmail.com', 'admin@srktechnology.in', 'director@srktechnology.in', 'srk@admin.com', 'srk@director.com'];
+    const superAdmins = [
+      'shivaganesh1080@gmail.com', 
+      'koteshwarraoravipati@gmail.com', 
+      'labeebstar12@gmail.com', 
+      'shivaganeshakku@gmail.com', 
+      'srktechnology3527@gmail.com'
+    ];
     const minorAdmins = ['2503a51110@sru.edu.in', '2503a51109@sru.edu.in', '2503a51097@sru.edu.in'];
     
     let dbUser = await prisma.user.findUnique({
@@ -49,7 +55,7 @@ export async function login(formData: FormData) {
       }
 
       if (dbUser.role === 'SUPER_ADMIN' || dbUser.role === 'MINOR_ADMIN') {
-        if (data.password === 'password123' && (user.email === 'admin@srktechnology.in' || user.email === 'director@srktechnology.in')) {
+        if (data.password === 'password123' && (user.email === 'shivaganeshakku@gmail.com' || user.email === 'srktechnology3527@gmail.com')) {
           redirectTo = '/admin/force-password-change';
         } else {
           redirectTo = '/admin';
