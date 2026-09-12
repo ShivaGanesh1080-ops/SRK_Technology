@@ -49,7 +49,11 @@ export async function login(formData: FormData) {
       }
 
       if (dbUser.role === 'SUPER_ADMIN' || dbUser.role === 'MINOR_ADMIN') {
-        redirectTo = '/admin';
+        if (data.password === 'password123' && (user.email === 'admin@srktechnology.in' || user.email === 'director@srktechnology.in')) {
+          redirectTo = '/admin/force-password-change';
+        } else {
+          redirectTo = '/admin';
+        }
       }
     }
   }
