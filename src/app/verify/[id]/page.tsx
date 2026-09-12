@@ -71,13 +71,17 @@ export default async function PublicCertificatePage({ params }: { params: Promis
         <PrintButton />
       </div>
 
-      <PremiumCertificate 
-        studentName={studentName}
-        workshopTitle={workshopTitle}
-        dateIssued={dateIssued}
-        certificateId={certificateId}
-        instructorName={instructorName}
-      />
+      <div className="w-full overflow-x-auto pb-8 flex justify-center">
+        <div className="min-w-[1000px]">
+          <PremiumCertificate 
+            studentName={studentName}
+            workshopTitle={workshopTitle}
+            dateIssued={dateIssued}
+            certificateId={certificateId}
+            instructorName={instructorName}
+          />
+        </div>
+      </div>
     </div>
   );
 }

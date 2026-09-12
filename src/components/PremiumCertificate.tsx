@@ -19,7 +19,6 @@ export function PremiumCertificate({
   return (
     <div className={`w-full max-w-5xl aspect-[1.414/1] bg-white p-4 shadow-2xl relative overflow-hidden print:shadow-none mx-auto ${isDemo ? "opacity-90" : ""}`} style={{
       backgroundColor: "#fdfbf7",
-      backgroundImage: "url('https://www.transparenttextures.com/patterns/cream-paper.png')",
       boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)"
     }}>
       {isDemo && (
