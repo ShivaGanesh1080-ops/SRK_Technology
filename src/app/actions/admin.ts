@@ -45,7 +45,7 @@ export async function createWorkshop(formData: FormData) {
         price,
         registrationDeadline: new Date(registrationDeadline),
         status,
-        mode: 'OFFLINE',
+        mode: 'ONLINE',
         certificateAvailable: true,
       }
     })
