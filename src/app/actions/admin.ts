@@ -1,4 +1,4 @@
-﻿'use server'
+'use server'
 
 import { PrismaClient } from '@prisma/client'
 import { requireRole } from '@/lib/auth'
@@ -224,7 +224,11 @@ export async function deleteWorkshop(formData: FormData) {
 
 export async function createCustomCertificate(formData: FormData) {
   await requireRole(['SUPER_ADMIN']);
-  const id = formData.get('id') as string;
+  
+  // Auto-generate Unique ID: SRK-XXXXXX
+  const randomHex = Math.floor(Math.random() * 16777215).toString(16).toUpperCase().padStart(6, '0');
+  const id = `SRK-${randomHex}`;
+  
   const certificateName = formData.get('certificateName') as string;
   const workshopTitle = formData.get('workshopTitle') as string;
 
@@ -238,5 +242,20 @@ export async function createCustomCertificate(formData: FormData) {
   }
   revalidatePath('/admin/certificates');
   redirect('/admin/certificates');
+}
+
+export async function deleteCustomCertificate(formData: FormData) {
+  await requireRole(['SUPER_ADMIN']);
+  const id = formData.get('id') as string;
+
+  try {
+    await prisma.customCertificate.delete({
+      where: { id }
+    });
+  } catch (error) {
+    console.error('Failed to delete custom certificate:', error);
+    throw new Error('Failed to delete certificate.');
+  }
+  revalidatePath('/admin/certificates');
 }
 
