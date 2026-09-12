@@ -78,7 +78,7 @@ export default async function WorkshopsPage() {
                   <p className="text-slate-600 text-sm mb-4 line-clamp-2">{workshop.shortDescription}</p>
                   
                   <div className="space-y-2 text-sm text-slate-500 mb-6">
-                    <div className="flex items-center"><span className="w-24 font-medium text-slate-700">Date:</span> {new Date(workshop.date).toLocaleDateString()}</div>
+                    <div className="flex items-center"><span className="w-24 font-medium text-slate-700">Duration:</span> {workshop.duration}</div>
                     <div className="flex items-center"><span className="w-24 font-medium text-slate-700">Mode:</span> {workshop.mode}</div>
                     <div className="flex items-center"><span className="w-24 font-medium text-slate-700">Location:</span> {workshop.location}</div>
                   </div>
