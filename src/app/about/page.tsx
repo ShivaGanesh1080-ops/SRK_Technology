@@ -24,7 +24,7 @@ export default function AboutPage() {
             We started with a simple observation: students want practical skills, but access to structured hands-on learning is not always easy.
           </p>
           <p className="text-slate-700">
-            SRK was created to bridge that gap. Founded by [Founder Names], we recognized that the traditional academic environment provides a necessary foundation, but the rapid pace of industry requires a different kind of learning—one based on doing, building, and solving real problems.
+            SRK was created to bridge that gap. Founded by <strong>Ravipati Phani Koteshwar Rao (Chairman)</strong> and <strong>Akku Shiva Ganesh (Co-Founder & CEO)</strong>, we recognized that the traditional academic environment provides a necessary foundation, but the rapid pace of industry requires a different kind of learning - one based on doing, building, and solving real problems.
           </p>
         </section>
 
@@ -43,7 +43,7 @@ export default function AboutPage() {
         <section className="mb-16">
           <h2 className="text-3xl font-bold text-slate-900 mb-6">Our First Step</h2>
           <p className="text-slate-700 mb-4">
-            We are starting at SR University. Our first goal is simple: help students learn by doing. Through our initial series of workshops and bootcamps, we are bringing practical, hands-on technology learning directly to the campus.
+            Our first goal is simple: help students learn by doing. Through our initial series of workshops and bootcamps, we are bringing practical, hands-on technology learning directly to campuses.
           </p>
         </section>
 
