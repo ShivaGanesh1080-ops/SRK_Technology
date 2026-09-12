@@ -4,6 +4,7 @@ import { Menu, ShieldCheck } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { logout } from "@/app/actions/auth";
 import { PrismaClient } from "@prisma/client";
+import { MobileMenu } from "./MobileMenu";
 
 const prisma = new PrismaClient();
 
@@ -59,11 +60,7 @@ export async function Navbar() {
             )}
           </div>
 
-          <div className="md:hidden">
-            <Button variant="ghost" size="icon">
-              <Menu className="h-6 w-6" />
-            </Button>
-          </div>
+          <MobileMenu user={user} dashboardUrl={dashboardUrl} />
         </div>
       </div>
     </header>
