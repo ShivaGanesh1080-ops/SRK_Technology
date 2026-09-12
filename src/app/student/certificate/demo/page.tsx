@@ -21,11 +21,7 @@ export default function DemoCertificatePage() {
       </div>
 
       {/* Redesigned Certificate Layout (Watermarked) */}
-      <div className="w-full max-w-5xl aspect-[1.414/1] bg-white p-4 md:p-8 shadow-2xl relative overflow-hidden print:shadow-none mx-auto opacity-90" style={{
-        backgroundImage: "url(
-\https://www.transparenttextures.com/patterns/cubes.png\')",
-        border: "12px solid #1e293b"
-      }}>
+      <div className="w-full max-w-5xl aspect-[1.414/1] bg-white p-4 md:p-8 shadow-2xl relative overflow-hidden print:shadow-none mx-auto opacity-90" style={{ backgroundImage: "url('https://www.transparenttextures.com/patterns/cubes.png')", border: "12px solid #1e293b" }}>
         {/* Watermark */}
         <div className="absolute inset-0 z-0 flex items-center justify-center rotate-[-30deg] pointer-events-none opacity-10">
            <span className="text-9xl font-black text-slate-900 tracking-widest">DEMO ONLY</span>
@@ -55,7 +51,7 @@ export default function DemoCertificatePage() {
           {/* Body */}
           <div className="flex-1 flex flex-col justify-center w-full max-w-3xl">
             <p className="text-lg text-slate-600 italic font-serif mb-6">This is to certify that</p>
-            <h2 className="text-5xl font-bold text-slate-400 mb-8 pb-4 border-b-2 border-dashed border-slate-300" style={{ fontFamily: "Georgia, serif" }}>
+            <h2 className="text-5xl font-bold text-slate-400 mb-8 pb-4 border-b-2 border-dashed border-slate-300" style={{ fontFamily: "'Brush Script MT', cursive", fontSize: "1.5rem", color: "#1e3a8a" }}>
               {studentName}
             </h2>
             <p className="text-lg text-slate-600 italic font-serif mb-6">will successfully complete the training program in</p>
@@ -81,9 +77,7 @@ export default function DemoCertificatePage() {
             </div>
 
             <div className="flex flex-col items-center">
-              <div className="w-48 border-b-2 border-slate-400 mb-2 pb-2" style={{ fontFamily: "\Brush
-Script
-MT\', cursive", fontSize: "1.5rem", color: "#1e3a8a" }}>
+              <div className="w-48 border-b-2 border-slate-400 mb-2 pb-2" style={{ fontFamily: "'Brush Script MT', cursive", fontSize: "1.5rem", color: "#1e3a8a" }}>
                  {instructorName}
               </div>
               <div className="text-sm font-bold text-slate-600 uppercase tracking-wider">Authorized Signature</div>
