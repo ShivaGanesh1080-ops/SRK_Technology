@@ -31,6 +31,9 @@ export default async function AdminLayout({
           <Link href="/admin/users" className="block px-4 py-2 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-colors">
             Users
           </Link>
+          <Link href="/admin/certificates" className="block px-4 py-2 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-colors">
+            Certificates
+          </Link>
           <Link href="/admin/settings" className="block px-4 py-2 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-colors">
             Settings
           </Link>

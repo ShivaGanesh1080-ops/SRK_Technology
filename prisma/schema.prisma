@@ -161,3 +161,11 @@ model Registration {
 
   @@unique([userId, workshopId])
 }
+
+model CustomCertificate {
+  id              String   @id
+  certificateName String
+  workshopTitle   String
+  issueDate       DateTime @default(now())
+  createdAt       DateTime @default(now())
+}

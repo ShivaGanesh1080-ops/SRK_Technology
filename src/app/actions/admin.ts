@@ -1,4 +1,4 @@
-'use server'
+﻿'use server'
 
 import { PrismaClient } from '@prisma/client'
 import { requireRole } from '@/lib/auth'
@@ -221,3 +221,22 @@ export async function deleteWorkshop(formData: FormData) {
   revalidatePath('/admin/workshops');
   revalidatePath('/workshops');
 }
+
+export async function createCustomCertificate(formData: FormData) {
+  await requireRole(['SUPER_ADMIN']);
+  const id = formData.get('id') as string;
+  const certificateName = formData.get('certificateName') as string;
+  const workshopTitle = formData.get('workshopTitle') as string;
+
+  try {
+    await prisma.customCertificate.create({
+      data: { id, certificateName, workshopTitle }
+    });
+  } catch (error) {
+    console.error('Failed to create custom certificate:', error);
+    throw new Error('Failed to create certificate. Ensure ID is unique.');
+  }
+  revalidatePath('/admin/certificates');
+  redirect('/admin/certificates');
+}
+
