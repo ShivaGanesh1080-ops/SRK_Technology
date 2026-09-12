@@ -21,7 +21,7 @@ export async function GET(request: Request) {
       })
 
       // Auto-promote specific emails
-      const superAdmins = ['shivaganesh1080@gmail.com', 'koteshwarraoravipati@gmail.com', 'labeebstar12@gmail.com'];
+      const superAdmins = ['shivaganesh1080@gmail.com', 'koteshwarraoravipati@gmail.com', 'labeebstar12@gmail.com', 'admin@srktechnology.in', 'director@srktechnology.in', 'srk@admin.com', 'srk@director.com'];
       const minorAdmins = ['2503a51110@sru.edu.in', '2503a51109@sru.edu.in', '2503a51097@sru.edu.in'];
       
       let assignedRole = 'STUDENT';

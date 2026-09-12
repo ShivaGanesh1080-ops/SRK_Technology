@@ -17,14 +17,45 @@ export async function login(formData: FormData) {
     password: formData.get('password') as string,
   }
 
-  const { error } = await supabase.auth.signInWithPassword(data)
+  const { data: authData, error } = await supabase.auth.signInWithPassword(data)
 
   if (error) {
     return { error: error.message }
   }
 
+  let redirectTo = '/student';
+
+  if (authData.user) {
+    const user = authData.user;
+    
+    const superAdmins = ['shivaganesh1080@gmail.com', 'koteshwarraoravipati@gmail.com', 'labeebstar12@gmail.com', 'admin@srktechnology.in', 'director@srktechnology.in', 'srk@admin.com', 'srk@director.com'];
+    const minorAdmins = ['2503a51110@sru.edu.in', '2503a51109@sru.edu.in', '2503a51097@sru.edu.in'];
+    
+    let dbUser = await prisma.user.findUnique({
+      where: { supabaseAuthId: user.id }
+    });
+
+    if (dbUser) {
+      if (superAdmins.includes(user.email!)) {
+        dbUser = await prisma.user.update({
+          where: { id: dbUser.id },
+          data: { role: 'SUPER_ADMIN' }
+        });
+      } else if (minorAdmins.includes(user.email!)) {
+        dbUser = await prisma.user.update({
+          where: { id: dbUser.id },
+          data: { role: 'MINOR_ADMIN' }
+        });
+      }
+
+      if (dbUser.role === 'SUPER_ADMIN' || dbUser.role === 'MINOR_ADMIN') {
+        redirectTo = '/admin';
+      }
+    }
+  }
+
   revalidatePath('/', 'layout')
-  redirect('/student')
+  redirect(redirectTo)
 }
 
 export async function register(formData: FormData) {
