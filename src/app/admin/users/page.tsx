@@ -56,7 +56,7 @@ export default async function AdminUsersPage() {
                     {user.studentProfile?.college || '-'}
                   </td>
                   <td className="px-6 py-4 text-slate-600">
-                    {user.studentProfile?.rollNo || '-'}
+                    {user.studentProfile?.studentId || '-'}
                   </td>
                   <td className="px-6 py-4 text-slate-500">
                     {new Date(user.createdAt).toLocaleDateString()}
