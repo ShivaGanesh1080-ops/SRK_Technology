@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, BookOpen, Code, Lightbulb, Users, CheckCircle2 } from "lucide-react";
 import { PrismaClient } from "@prisma/client";
 import { FadeIn, FadeInStagger, FadeInItem } from "@/components/animations/FadeIn";
+import { HeroBackground } from "@/components/animations/HeroBackground";
+import { HoverCard } from "@/components/animations/HoverCard";
 
 const prisma = new PrismaClient();
 
@@ -24,6 +26,7 @@ export default async function Home() {
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-slate-900 text-white py-24 sm:py-32">
         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2071&auto=format&fit=crop')] bg-cover bg-center opacity-10"></div>
+        <HeroBackground />
         <div className="container relative mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl text-center">
           <FadeIn delay={0.1}>
             <h1 className="text-4xl sm:text-6xl font-bold tracking-tight mb-6">
@@ -162,7 +165,9 @@ export default async function Home() {
               const isFull = workshop._count.registrations >= workshop.capacity;
               const isClosed = new Date(workshop.registrationDeadline) < new Date();
               return (
-              <FadeInItem key={workshop.id} className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden flex flex-col hover:shadow-md transition-shadow">
+              <FadeInItem key={workshop.id}>
+                <HoverCard className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden flex flex-col hover:shadow-md transition-shadow h-full">
+                  
                 {workshop.imageUrl && (
                   <div className="h-48 w-full overflow-hidden">
                     <img src={workshop.imageUrl} alt={workshop.title} className="w-full h-full object-cover" />
@@ -194,6 +199,8 @@ export default async function Home() {
                     </Button>
                   </Link>
                 </div>
+              
+                </HoverCard>
               </FadeInItem>
             );
             })}
