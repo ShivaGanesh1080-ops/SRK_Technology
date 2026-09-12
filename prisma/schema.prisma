@@ -1,0 +1,163 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum Role {
+  STUDENT
+  TRAINER
+  COLLEGE_ADMIN
+  MINOR_ADMIN
+  SUPER_ADMIN
+}
+
+enum WorkshopMode {
+  OFFLINE
+  ONLINE
+  HYBRID
+}
+
+enum WorkshopStatus {
+  DRAFT
+  PUBLISHED
+  FULL
+  COMPLETED
+  CANCELLED
+}
+
+enum RegistrationStatus {
+  PENDING_REVIEW
+  CONFIRMED
+  CANCELLED
+  REJECTED
+  ATTENDED
+  COMPLETED
+}
+
+model User {
+  id             String          @id @default(uuid())
+  supabaseAuthId String          @unique // Links to Supabase Auth UUID
+  email          String          @unique
+  role           Role            @default(STUDENT)
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+
+  studentProfile StudentProfile?
+  trainerProfile TrainerProfile?
+  collegeProfile CollegeProfile?
+  registrations  Registration[]
+}
+
+model StudentProfile {
+  id          String   @id @default(uuid())
+  userId      String   @unique
+  fullName    String
+  phone       String?
+  college     String
+  department  String
+  year        String
+  studentId   String
+  githubUrl   String?
+  linkedinUrl String?
+  profileImage String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model TrainerProfile {
+  id          String   @id @default(uuid())
+  userId      String   @unique
+  fullName    String
+  bio         String?
+  expertise   String[]
+  experience  Int?
+  linkedinUrl String?
+  githubUrl   String?
+  profileImage String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  workshops   Workshop[]
+}
+
+model CollegeProfile {
+  id             String   @id @default(uuid())
+  userId         String   @unique
+  collegeName    String
+  contactPerson  String
+  phone          String?
+  city           String?
+  state          String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model WorkshopDomain {
+  id          String     @id @default(uuid())
+  slug        String     @unique
+  title       String
+  description String
+  icon        String?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  workshops   Workshop[]
+}
+
+model Workshop {
+  id                   String         @id @default(uuid())
+  slug                 String         @unique
+  title                String
+  shortDescription     String
+  description          String
+  imageUrl             String?
+  domainId             String
+  trainerId            String?
+  date                 DateTime
+  startTime            String
+  endTime              String
+  duration             String
+  location             String
+  mode                 WorkshopMode   @default(OFFLINE)
+  price                Float          @default(0)
+  capacity             Int
+  registrationDeadline DateTime
+  status               WorkshopStatus @default(DRAFT)
+  certificateAvailable Boolean        @default(false)
+  requirements         String[]
+  learningOutcomes     String[]
+  agenda               String?
+  createdAt            DateTime       @default(now())
+  updatedAt            DateTime       @updatedAt
+
+  domain               WorkshopDomain @relation(fields: [domainId], references: [id])
+  trainer              TrainerProfile? @relation(fields: [trainerId], references: [id])
+  registrations        Registration[]
+}
+
+model Registration {
+  id                   String             @id @default(uuid())
+  userId               String
+  workshopId           String
+  status               RegistrationStatus @default(PENDING_REVIEW)
+  paymentUtr           String?
+  paymentScreenshotUrl String?
+  certificateName      String?
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @updatedAt
+
+  user           User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  workshop       Workshop           @relation(fields: [workshopId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, workshopId])
+}
