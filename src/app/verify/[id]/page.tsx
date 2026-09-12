@@ -1,8 +1,9 @@
-﻿import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ShieldCheck } from "lucide-react";
 import { PremiumCertificate } from "@/components/PremiumCertificate";
+import { PrintButton } from "@/components/PrintButton";
 
 const prisma = new PrismaClient();
 
@@ -67,9 +68,7 @@ export default async function PublicCertificatePage({ params }: { params: Promis
           <ShieldCheck className="w-6 h-6 mr-2" />
           <span className="font-medium">Officially Verified by SRK TECHNOLOGY</span>
         </div>
-        <button onClick={() => typeof window !== "undefined" && window.print()} className="bg-[#0f172a] text-white px-6 py-2 rounded-md font-medium hover:bg-slate-800 transition-colors shadow-sm">
-          Print / Save as PDF
-        </button>
+        <PrintButton />
       </div>
 
       <PremiumCertificate 
