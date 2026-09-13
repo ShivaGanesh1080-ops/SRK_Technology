@@ -3,7 +3,7 @@
 import { PrismaClient } from '@prisma/client'
 import Razorpay from 'razorpay'
 import crypto from 'crypto'
-import { getUser } from '@/lib/auth'
+import { createClient } from '@/lib/supabase/server'
 
 const prisma = new PrismaClient()
 
@@ -14,7 +14,8 @@ const razorpay = new Razorpay({
 })
 
 export async function createRazorpayOrder(workshopId: string) {
-  const user = await getUser()
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
   if (!user) throw new Error('Unauthorized')
 
   // Get workshop price and check capacity
@@ -60,7 +61,8 @@ export async function verifyRazorpayPayment(
   workshopId: string,
   certificateName: string
 ) {
-  const user = await getUser()
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
   if (!user) throw new Error('Unauthorized')
 
   const text = `${razorpay_order_id}|${razorpay_payment_id}`
@@ -116,8 +118,8 @@ export async function verifyRazorpayPayment(
     const studentName = studentProfile?.fullName || user.email;
     
     await sendApprovalEmail(
-      user.email,
-      studentName,
+      user.email || 'student@srktechnology.in',
+      studentName || 'Student',
       registration.workshop.title,
       demoUrl
     );
