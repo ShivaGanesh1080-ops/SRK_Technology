@@ -70,27 +70,33 @@ export default async function Home() {
           </FadeIn>
           
           <FadeInStagger className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-            <FadeInItem className="p-6">
-              <div className="mx-auto w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600 mb-4">
-                <BookOpen className="w-6 h-6" />
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Academic Foundation</h3>
-              <p className="text-slate-600">Strong theoretical knowledge provided by university curriculum.</p>
+            <FadeInItem>
+              <HoverCard className="p-8 h-full bg-white rounded-2xl border border-slate-100 shadow-sm flex flex-col items-center">
+                <div className="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center text-blue-600 mb-6 transform transition-transform duration-500 hover:rotate-12 hover:scale-110 shadow-inner">
+                  <BookOpen className="w-8 h-8" />
+                </div>
+                <h3 className="text-xl font-bold text-slate-900 mb-3">Academic Foundation</h3>
+                <p className="text-slate-600">Strong theoretical knowledge provided by university curriculum.</p>
+              </HoverCard>
             </FadeInItem>
-            <FadeInItem className="p-6 relative">
-              <div className="hidden md:block absolute top-1/2 left-0 w-full h-0.5 bg-slate-200 -z-10 -translate-y-1/2"></div>
-              <div className="mx-auto w-12 h-12 bg-amber-100 rounded-lg flex items-center justify-center text-amber-600 mb-4 relative z-10">
-                <Lightbulb className="w-6 h-6" />
-              </div>
-              <h3 className="text-xl font-semibold mb-2">The Skill Gap</h3>
-              <p className="text-slate-600">Limited access to structured, hands-on technical training.</p>
+            <FadeInItem className="relative">
+              <div className="hidden md:block absolute top-1/2 -left-4 w-[calc(100%+2rem)] h-0.5 bg-gradient-to-r from-blue-100 via-amber-100 to-green-100 -z-10 -translate-y-1/2"></div>
+              <HoverCard className="p-8 h-full bg-white rounded-2xl border border-slate-100 shadow-sm flex flex-col items-center relative z-10">
+                <div className="w-16 h-16 bg-amber-50 rounded-2xl flex items-center justify-center text-amber-600 mb-6 transform transition-transform duration-500 hover:rotate-12 hover:scale-110 shadow-inner">
+                  <Lightbulb className="w-8 h-8" />
+                </div>
+                <h3 className="text-xl font-bold text-slate-900 mb-3">The Skill Gap</h3>
+                <p className="text-slate-600">Limited access to structured, hands-on technical training.</p>
+              </HoverCard>
             </FadeInItem>
-            <FadeInItem className="p-6">
-              <div className="mx-auto w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center text-green-600 mb-4">
-                <Code className="w-6 h-6" />
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Practical Experience</h3>
-              <p className="text-slate-600">Building real projects with modern tools and industry standards.</p>
+            <FadeInItem>
+              <HoverCard className="p-8 h-full bg-white rounded-2xl border border-slate-100 shadow-sm flex flex-col items-center">
+                <div className="w-16 h-16 bg-green-50 rounded-2xl flex items-center justify-center text-green-600 mb-6 transform transition-transform duration-500 hover:rotate-12 hover:scale-110 shadow-inner">
+                  <Code className="w-8 h-8" />
+                </div>
+                <h3 className="text-xl font-bold text-slate-900 mb-3">Practical Experience</h3>
+                <p className="text-slate-600">Building real projects with modern tools and industry standards.</p>
+              </HoverCard>
             </FadeInItem>
           </FadeInStagger>
         </div>
@@ -139,9 +145,9 @@ export default async function Home() {
                 ))}
               </ul>
             </FadeIn>
-            <FadeIn delay={0.2} className="relative h-96 rounded-2xl overflow-hidden shadow-xl">
-              <div className="absolute inset-0 bg-slate-900/10"></div>
-              <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=2070&auto=format&fit=crop" alt="Students collaborating" className="object-cover w-full h-full" />
+            <FadeIn delay={0.2} className="relative h-96 rounded-2xl overflow-hidden shadow-xl group">
+              <div className="absolute inset-0 bg-slate-900/20 group-hover:bg-slate-900/0 transition-colors duration-700 z-10 pointer-events-none"></div>
+              <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=2070&auto=format&fit=crop" alt="Students collaborating" className="object-cover w-full h-full transform transition-transform duration-700 group-hover:scale-110" />
             </FadeIn>
           </div>
         </div>
