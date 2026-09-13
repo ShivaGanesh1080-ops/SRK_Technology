@@ -6,6 +6,8 @@ import { FadeIn, FadeInStagger, FadeInItem } from "@/components/animations/FadeI
 import { HeroBackground } from "@/components/animations/HeroBackground";
 import { HoverCard } from "@/components/animations/HoverCard";
 
+import { TypewriterEffect } from "@/components/animations/TypewriterEffect";
+
 const prisma = new PrismaClient();
 
 export default async function Home() {
@@ -29,8 +31,10 @@ export default async function Home() {
         <HeroBackground />
         <div className="container relative mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl text-center">
           <FadeIn delay={0.1}>
-            <h1 className="text-4xl sm:text-6xl font-bold tracking-tight mb-6">
-              Learn Skills.<br className="hidden sm:block" /> Build Things.<br className="hidden sm:block" /> Become Industry Ready.
+            <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight mb-6 leading-tight">
+              Learn Skills.<br className="hidden sm:block" /> 
+              Build Things.<br className="hidden sm:block" /> 
+              Become <TypewriterEffect words={["Industry Ready.", "A Developer.", "Unstoppable.", "A Leader."]} />
             </h1>
           </FadeIn>
           <FadeIn delay={0.2}>
