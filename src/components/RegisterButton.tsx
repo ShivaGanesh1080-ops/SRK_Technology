@@ -3,29 +3,35 @@
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { registerForWorkshop } from '@/app/actions/workshops'
+import { createRazorpayOrder, verifyRazorpayPayment } from '@/app/actions/payment'
 import { useRouter } from 'next/navigation'
+import Script from 'next/script'
+
+// Add Razorpay to window object types
+declare global {
+  interface Window {
+    Razorpay: any;
+  }
+}
 
 export default function RegisterButton({ 
   workshopId, 
   price,
   isFull, 
   isClosed, 
-  isLoggedIn,
-  paymentUpiId,
-  paymentInstructions
+  isLoggedIn
 }: { 
   workshopId: string, 
   price: number,
   isFull: boolean, 
   isClosed: boolean,
-  isLoggedIn: boolean,
-  paymentUpiId: string,
-  paymentInstructions: string
+  isLoggedIn: boolean
 }) {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
   const [showForm, setShowForm] = useState(false)
+  const [certName, setCertName] = useState('')
   const router = useRouter()
 
   const handleApplyClick = () => {
@@ -36,13 +42,13 @@ export default function RegisterButton({
     setShowForm(true)
   }
 
-  const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleFreeRegistration = async () => {
     setLoading(true);
     setError(null);
     
-    const formData = new FormData(e.currentTarget);
+    const formData = new FormData();
     formData.append('workshopId', workshopId);
+    formData.append('certificateName', certName);
     
     const result = await registerForWorkshop(formData);
     
@@ -55,6 +61,68 @@ export default function RegisterButton({
     }
   }
 
+  const handleRazorpayPayment = async () => {
+    if (!certName.trim()) {
+      setError("Please enter your name for the certificate");
+      return;
+    }
+    
+    setLoading(true);
+    setError(null);
+
+    try {
+      // 1. Create order on the backend
+      const order = await createRazorpayOrder(workshopId);
+
+      // 2. Setup Razorpay options
+      const options = {
+        key: order.key_id, // Enter the Key ID generated from the Dashboard
+        amount: order.amount,
+        currency: order.currency,
+        name: "SRK TECHNOLOGY",
+        description: "Workshop Registration",
+        order_id: order.id,
+        handler: async function (response: any) {
+          try {
+            // 3. Verify payment on backend
+            await verifyRazorpayPayment(
+              response.razorpay_payment_id,
+              response.razorpay_order_id,
+              response.razorpay_signature,
+              workshopId,
+              certName
+            );
+            
+            setSuccess(true);
+            router.push('/student');
+          } catch (err: any) {
+            setError(err.message || "Payment verification failed");
+            setLoading(false);
+          }
+        },
+        theme: {
+          color: "#2563eb",
+        },
+        modal: {
+          ondismiss: function() {
+            setLoading(false);
+          }
+        }
+      };
+
+      // 3. Open Razorpay Checkout
+      const rzp1 = new window.Razorpay(options);
+      rzp1.on('payment.failed', function (response: any){
+        setError(response.error.description || "Payment failed");
+        setLoading(false);
+      });
+      rzp1.open();
+    } catch (err: any) {
+      setError(err.message || "Failed to initiate payment");
+      setLoading(false);
+    }
+  }
+
   if (isFull) {
     return <Button className="w-full text-lg py-6" size="lg" disabled>Workshop Full</Button>
   }
@@ -64,45 +132,37 @@ export default function RegisterButton({
 
   if (showForm && !success) {
     return (
-      <form onSubmit={handleRegister} className="space-y-4 bg-white p-4 rounded-md border border-slate-200">
+      <div className="space-y-4 bg-white p-4 rounded-md border border-slate-200">
+        <Script src="https://checkout.razorpay.com/v1/checkout.js" />
+        
         <h4 className="font-semibold text-slate-900">Application Form</h4>
         
         <div className="space-y-2 mb-4">
-          <label className="text-xs font-medium text-slate-700">Name to be Printed on Certificate</label>
-          <input required name="certificateName" type="text" className="w-full px-3 py-2 border rounded text-sm" placeholder="e.g. John Doe" />
+          <label className="text-xs font-medium text-slate-700">Name to be Printed on Certificate <span className="text-red-500">*</span></label>
+          <input 
+            required 
+            type="text" 
+            value={certName}
+            onChange={(e) => setCertName(e.target.value)}
+            className="w-full px-3 py-2 border border-slate-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" 
+            placeholder="e.g. John Doe" 
+          />
         </div>
 
-        {price > 0 ? (
-          <>
-            <p className="text-xs text-slate-500 mb-2">{paymentInstructions}</p>
-            
-            <div className="bg-slate-50 p-3 rounded text-sm text-slate-700 font-mono mb-4 border border-slate-100 font-bold text-center">
-              UPI ID: {paymentUpiId}
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-xs font-medium text-slate-700">Payment UTR ID</label>
-              <input required name="paymentUtr" type="text" className="w-full px-3 py-2 border rounded text-sm" placeholder="e.g. 123456789012" />
-            </div>
-            
-            <div className="space-y-2">
-              <label className="text-xs font-medium text-slate-700">Payment Screenshot</label>
-              <input required name="paymentScreenshot" type="file" accept="image/*" className="w-full text-sm" />
-            </div>
-          </>
-        ) : (
-          <p className="text-sm text-slate-600 mb-4">This is a free workshop. Click below to confirm your registration.</p>
-        )}
-
-        {error && <div className="text-red-500 text-xs font-medium text-center">{error}</div>}
+        {error && <div className="text-red-500 text-xs font-medium text-center bg-red-50 p-2 rounded">{error}</div>}
         
         <div className="flex gap-2 pt-2">
           <Button type="button" variant="outline" className="flex-1" onClick={() => setShowForm(false)} disabled={loading}>Cancel</Button>
-          <Button type="submit" className="flex-1 bg-blue-600 hover:bg-blue-700" disabled={loading}>
-            {loading ? 'Processing...' : (price > 0 ? 'Submit Payment' : 'Register for Free')}
+          <Button 
+            type="button" 
+            className="flex-1 bg-blue-600 hover:bg-blue-700" 
+            onClick={price > 0 ? handleRazorpayPayment : handleFreeRegistration}
+            disabled={loading || !certName.trim()}
+          >
+            {loading ? 'Processing...' : (price > 0 ? 'Pay with Razorpay' : 'Confirm Registration')}
           </Button>
         </div>
-      </form>
+      </div>
     )
   }
 

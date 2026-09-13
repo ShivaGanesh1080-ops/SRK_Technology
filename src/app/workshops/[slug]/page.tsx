@@ -135,8 +135,6 @@ export default async function WorkshopDetailPage({ params }: { params: Promise<{
               isFull={isFull} 
               isClosed={isClosed} 
               isLoggedIn={!!session} 
-              paymentUpiId={settings.paymentUpiId}
-              paymentInstructions={settings.paymentInstructions.replace('{amount}', workshop.price.toString())}
             />
             
             <p className="text-xs text-center text-slate-500 mt-4">
