@@ -7,11 +7,12 @@ import type { NextConfig } from "next";
 // 'connect-src' explicitly allows Supabase connections.
 const cspHeader = `
     default-src 'self';
-    script-src 'self' 'unsafe-eval' 'unsafe-inline';
+    script-src 'self' 'unsafe-eval' 'unsafe-inline' https://checkout.razorpay.com;
     style-src 'self' 'unsafe-inline';
-    img-src 'self' blob: data: https://images.unsplash.com;
+    img-src 'self' blob: data: https://images.unsplash.com https://*.razorpay.com;
     font-src 'self';
-    connect-src 'self' https://*.supabase.co;
+    connect-src 'self' https://*.supabase.co https://*.razorpay.com;
+    frame-src 'self' https://*.razorpay.com;
     object-src 'none';
     base-uri 'self';
     form-action 'self';
