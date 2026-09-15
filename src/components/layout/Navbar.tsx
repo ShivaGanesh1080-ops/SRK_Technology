@@ -26,7 +26,7 @@ export async function Navbar() {
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center gap-2">
             <Link href="/" className="flex items-center space-x-2">
-              <span className="text-2xl font-bold tracking-tight text-slate-900">SRK TECHNOLOGY</span>
+              <img src="/logo.jpg" alt="SRK Technology Logo" className="h-10 w-auto object-contain rounded" />
             </Link>
           </div>
           
