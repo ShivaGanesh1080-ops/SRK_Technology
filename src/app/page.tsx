@@ -1,14 +1,13 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, BookOpen, Code, Lightbulb, Users, CheckCircle2 } from "lucide-react";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
 import { FadeIn, FadeInStagger, FadeInItem } from "@/components/animations/FadeIn";
 import { HeroBackground } from "@/components/animations/HeroBackground";
 import { HoverCard } from "@/components/animations/HoverCard";
 
 import { TypewriterEffect } from "@/components/animations/TypewriterEffect";
 
-const prisma = new PrismaClient();
 
 export default async function Home() {
   const upcomingWorkshops = await prisma.workshop.findMany({

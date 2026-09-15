@@ -1,9 +1,8 @@
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
 import { requireRole } from "@/lib/auth";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Users, BookOpen } from "lucide-react";
 
-const prisma = new PrismaClient();
 
 export default async function CollegeDashboardPage() {
   const user = await requireRole(['COLLEGE_ADMIN']);

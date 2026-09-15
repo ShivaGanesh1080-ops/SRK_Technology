@@ -1,11 +1,10 @@
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import DeleteWorkshopForm from "@/components/DeleteWorkshopForm";
 
 import { createClient } from "@/lib/supabase/server";
 
-const prisma = new PrismaClient();
 
 export default async function AdminWorkshopsPage() {
   const supabase = await createClient();

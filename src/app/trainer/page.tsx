@@ -1,7 +1,6 @@
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
 import { requireRole } from "@/lib/auth";
 
-const prisma = new PrismaClient();
 
 export default async function TrainerDashboardPage() {
   const user = await requireRole(['TRAINER']);

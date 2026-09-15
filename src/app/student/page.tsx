@@ -1,11 +1,10 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { createClient } from "@/lib/supabase/server";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import { logout } from "@/app/actions/auth";
 
-const prisma = new PrismaClient();
 
 export default async function StudentDashboardPage() {
   const supabase = await createClient();

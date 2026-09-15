@@ -1,9 +1,8 @@
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
 import { requireRole } from "@/lib/auth";
 
 export const dynamic = 'force-dynamic';
 
-const prisma = new PrismaClient();
 
 export default async function AdminUsersPage() {
   await requireRole(['SUPER_ADMIN']); // Only Master Admins can see all users

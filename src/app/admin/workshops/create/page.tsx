@@ -1,8 +1,7 @@
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
 import { Button } from "@/components/ui/button";
 import { createWorkshop } from "@/app/actions/admin";
 
-const prisma = new PrismaClient();
 
 export default async function CreateWorkshopPage() {
   const domains = await prisma.workshopDomain.findMany();

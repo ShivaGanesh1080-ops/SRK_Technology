@@ -1,12 +1,11 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { PrismaClient } from "@prisma/client";
+import { prisma  } from "@/lib/prisma";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 
 export const dynamic = 'force-dynamic';
 
-const prisma = new PrismaClient();
 
 export default async function DomainDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;

@@ -1,10 +1,9 @@
 'use server'
 
 import { createClient } from '@/lib/supabase/server'
-import { PrismaClient } from '@prisma/client'
+import { prisma } from "@/lib/prisma"
 import { revalidatePath } from 'next/cache'
 
-const prisma = new PrismaClient()
 
 export async function registerForWorkshop(formData: FormData) {
   const supabase = await createClient()

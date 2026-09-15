@@ -1,11 +1,10 @@
-import { PrismaClient } from "@prisma/client";
+import { prisma  } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ShieldCheck } from "lucide-react";
 import { PremiumCertificate } from "@/components/PremiumCertificate";
 import { PrintButton } from "@/components/PrintButton";
 
-const prisma = new PrismaClient();
 
 export default async function PublicCertificatePage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;

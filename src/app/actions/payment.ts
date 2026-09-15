@@ -1,11 +1,10 @@
 'use server'
 
-import { PrismaClient } from '@prisma/client'
+import { prisma } from "@/lib/prisma"
 import Razorpay from 'razorpay'
 import crypto from 'crypto'
 import { createClient } from '@/lib/supabase/server'
 
-const prisma = new PrismaClient()
 
 // Note: Ensure RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET are in .env
 const razorpay = new Razorpay({

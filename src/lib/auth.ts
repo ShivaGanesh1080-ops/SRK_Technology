@@ -1,8 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
-import { PrismaClient, Role } from '@prisma/client'
+import { prisma, Role } from "@/lib/prisma"
 import { redirect } from 'next/navigation'
 
-const prisma = new PrismaClient()
 
 export async function requireAuth() {
   const supabase = await createClient()

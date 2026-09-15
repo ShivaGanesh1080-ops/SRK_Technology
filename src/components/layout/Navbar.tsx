@@ -3,10 +3,9 @@ import { Button } from "@/components/ui/button";
 import { Menu, ShieldCheck } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { logout } from "@/app/actions/auth";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
 import { MobileMenu } from "./MobileMenu";
 
-const prisma = new PrismaClient();
 
 export async function Navbar() {
   const supabase = await createClient();

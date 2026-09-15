@@ -1,7 +1,6 @@
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
 import { requireRole } from "@/lib/auth";
 
-const prisma = new PrismaClient();
 
 export default async function CollegeStudentsPage() {
   const user = await requireRole(['COLLEGE_ADMIN']);

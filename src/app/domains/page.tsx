@@ -1,10 +1,9 @@
 import Link from "next/link";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
 import { Button } from "@/components/ui/button";
 
 export const dynamic = 'force-dynamic';
 
-const prisma = new PrismaClient();
 
 export default async function DomainsPage() {
   const domains = await prisma.workshopDomain.findMany({

@@ -1,8 +1,7 @@
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
 import { Button } from "@/components/ui/button";
 import { reviewApplication, markApplicationCompleted } from "@/app/actions/admin";
 
-const prisma = new PrismaClient();
 
 export default async function AdminApplicationsPage() {
   const applications = await prisma.registration.findMany({

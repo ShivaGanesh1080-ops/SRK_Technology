@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { PrismaClient } from "@prisma/client";
+import { prisma  } from "@/lib/prisma";
 import { Calendar, Clock, MapPin, User, CheckCircle2 } from "lucide-react";
 import RegisterButton from "@/components/RegisterButton";
 import { createClient } from "@/lib/supabase/server";
@@ -7,7 +7,6 @@ import { getSettings } from "@/lib/settings";
 
 export const dynamic = 'force-dynamic';
 
-const prisma = new PrismaClient();
 
 export default async function WorkshopDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;

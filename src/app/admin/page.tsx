@@ -1,8 +1,7 @@
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Users, BookOpen, GraduationCap, Building } from "lucide-react";
 
-const prisma = new PrismaClient();
 
 export default async function AdminDashboardPage() {
   const [

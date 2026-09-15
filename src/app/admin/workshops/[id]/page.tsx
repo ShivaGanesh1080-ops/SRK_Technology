@@ -1,9 +1,8 @@
-import { PrismaClient } from "@prisma/client";
+import { prisma  } from "@/lib/prisma";
 import { Button } from "@/components/ui/button";
 import { updateWorkshop } from "@/app/actions/admin";
 import { notFound } from "next/navigation";
 
-const prisma = new PrismaClient();
 
 export default async function EditWorkshopPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
