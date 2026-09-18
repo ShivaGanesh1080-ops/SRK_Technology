@@ -42,7 +42,8 @@ export function Footer() {
         <div className="mt-12 pt-8 border-t text-center text-sm text-slate-500 space-y-2">
           <p className="text-slate-600">
             <span className="font-semibold">Founder & Chairman:</span> Ravipati Phani Koteshwar Rao <span className="hidden sm:inline mx-2">|</span><br className="sm:hidden" />
-            <span className="font-semibold">Co-Founder:</span> Kamineni Sravanthi
+            <span className="font-semibold">Co-Founder:</span> Kamineni Sravanthi <span className="hidden sm:inline mx-2">|</span><br className="sm:hidden" />
+            <span className="font-semibold">CEO:</span> Akku Shiva Ganesh
           </p>
           <p className="text-slate-600 mb-4">
             <span className="font-semibold">Core Team:</span> Karre Shiva Saketh, Goka Viishwas, Mohammad Labeeb
