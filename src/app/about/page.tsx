@@ -24,7 +24,7 @@ export default function AboutPage() {
             We started with a simple observation: students want practical skills, but access to structured hands-on learning is not always easy.
           </p>
           <p className="text-slate-700">
-            SRK was created to bridge that gap. Founded by <strong>Ravipati Phani Koteshwar Rao (Chairman)</strong> and <strong>Akku Shiva Ganesh (Co-Founder & CEO)</strong>, we recognized that the traditional academic environment provides a necessary foundation, but the rapid pace of industry requires a different kind of learning - one based on doing, building, and solving real problems.
+            SRK was created to bridge that gap. Founded by <strong>Ravipati Phani Koteshwar Rao (Chairman)</strong> and <strong>Kamineni Sravanthi (Co-Founder)</strong>, we recognized that the traditional academic environment provides a necessary foundation, but the rapid pace of industry requires a different kind of learning - one based on doing, building, and solving real problems.
           </p>
         </section>
 
