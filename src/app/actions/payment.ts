@@ -65,6 +65,10 @@ export async function verifyRazorpayPayment(
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return { error: 'Unauthorized' }
 
+    // Resolve Prisma User ID
+    const dbUser = await prisma.user.findUnique({ where: { supabaseAuthId: user.id } })
+    if (!dbUser) return { error: 'User not found in database' }
+
     const text = `${razorpay_order_id}|${razorpay_payment_id}`
     const secret = process.env.RAZORPAY_KEY_SECRET || 'placeholder_secret'
     
@@ -81,7 +85,7 @@ export async function verifyRazorpayPayment(
     const registration = await prisma.registration.upsert({
       where: {
         userId_workshopId: {
-          userId: user.id,
+          userId: dbUser.id,
           workshopId: workshopId
         }
       },
@@ -93,7 +97,7 @@ export async function verifyRazorpayPayment(
         certificateName: certificateName
       },
       create: {
-        userId: user.id,
+        userId: dbUser.id,
         workshopId: workshopId,
         status: 'CONFIRMED',
         razorpayOrderId: razorpay_order_id,
@@ -112,7 +116,7 @@ export async function verifyRazorpayPayment(
       const host = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
       const demoUrl = `${host}/student/certificate/demo`;
       
-      const studentProfile = await prisma.studentProfile.findUnique({ where: { userId: user.id } })
+      const studentProfile = await prisma.studentProfile.findUnique({ where: { userId: dbUser.id } })
       const studentName = studentProfile?.fullName || user.email;
       
       await sendApprovalEmail(
