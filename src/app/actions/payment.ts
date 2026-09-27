@@ -60,71 +60,74 @@ export async function verifyRazorpayPayment(
   workshopId: string,
   certificateName: string
 ) {
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
-  if (!user) throw new Error('Unauthorized')
-
-  const text = `${razorpay_order_id}|${razorpay_payment_id}`
-  const secret = process.env.RAZORPAY_KEY_SECRET || 'placeholder_secret'
-  
-  const generated_signature = crypto
-    .createHmac('sha256', secret)
-    .update(text)
-    .digest('hex')
-
-  if (generated_signature !== razorpay_signature) {
-    throw new Error('Payment verification failed. Invalid signature.')
-  }
-
-  // Payment is verified. Upsert the registration status to CONFIRMED.
-  const registration = await prisma.registration.upsert({
-    where: {
-      userId_workshopId: {
-        userId: user.id,
-        workshopId: workshopId
-      }
-    },
-    update: {
-      status: 'CONFIRMED',
-      razorpayOrderId: razorpay_order_id,
-      razorpayPaymentId: razorpay_payment_id,
-      razorpaySignature: razorpay_signature,
-      certificateName: certificateName
-    },
-    create: {
-      userId: user.id,
-      workshopId: workshopId,
-      status: 'CONFIRMED',
-      razorpayOrderId: razorpay_order_id,
-      razorpayPaymentId: razorpay_payment_id,
-      razorpaySignature: razorpay_signature,
-      certificateName: certificateName
-    },
-    include: {
-      workshop: true
-    }
-  })
-
-  // Optionally send confirmation email here
   try {
-    const { sendApprovalEmail } = await import('@/lib/email');
-    const host = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
-    const demoUrl = `${host}/student/certificate/demo`;
-    
-    // We might not have the full name if they didn't fill out the student profile fully,
-    // but the email is required.
-    const studentProfile = await prisma.studentProfile.findUnique({ where: { userId: user.id } })
-    const studentName = studentProfile?.fullName || user.email;
-    
-    await sendApprovalEmail(
-      user.email || 'student@srktechnology.in',
-      studentName || 'Student',
-      registration.workshop.title,
-      demoUrl
-    );
-  } catch (e) {
-    console.error("Failed to send approval email after payment:", e)
-  }
+    const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) return { error: 'Unauthorized' }
 
-  return { success: true }
+    const text = `${razorpay_order_id}|${razorpay_payment_id}`
+    const secret = process.env.RAZORPAY_KEY_SECRET || 'placeholder_secret'
+    
+    const generated_signature = crypto
+      .createHmac('sha256', secret)
+      .update(text)
+      .digest('hex')
+
+    if (generated_signature !== razorpay_signature) {
+      return { error: 'Payment verification failed. Invalid signature.' }
+    }
+
+    // Payment is verified. Upsert the registration status to CONFIRMED.
+    const registration = await prisma.registration.upsert({
+      where: {
+        userId_workshopId: {
+          userId: user.id,
+          workshopId: workshopId
+        }
+      },
+      update: {
+        status: 'CONFIRMED',
+        razorpayOrderId: razorpay_order_id,
+        razorpayPaymentId: razorpay_payment_id,
+        razorpaySignature: razorpay_signature,
+        certificateName: certificateName
+      },
+      create: {
+        userId: user.id,
+        workshopId: workshopId,
+        status: 'CONFIRMED',
+        razorpayOrderId: razorpay_order_id,
+        razorpayPaymentId: razorpay_payment_id,
+        razorpaySignature: razorpay_signature,
+        certificateName: certificateName
+      },
+      include: {
+        workshop: true
+      }
+    })
+
+    // Optionally send confirmation email here
+    try {
+      const { sendApprovalEmail } = await import('@/lib/email');
+      const host = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+      const demoUrl = `${host}/student/certificate/demo`;
+      
+      const studentProfile = await prisma.studentProfile.findUnique({ where: { userId: user.id } })
+      const studentName = studentProfile?.fullName || user.email;
+      
+      await sendApprovalEmail(
+        user.email || 'student@srktechnology.in',
+        studentName || 'Student',
+        registration.workshop.title,
+        demoUrl
+      );
+    } catch (e: any) {
+      console.error("Failed to send approval email after payment:", e)
+    }
+
+    return { success: true }
+  } catch (err: any) {
+    console.error("Critical error in verifyRazorpayPayment:", err);
+    return { error: err.message || "An unexpected server error occurred." }
+  }
 }

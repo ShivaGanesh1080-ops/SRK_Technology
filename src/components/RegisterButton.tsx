@@ -84,13 +84,19 @@ export default function RegisterButton({
         handler: async function (response: any) {
           try {
             // 3. Verify payment on backend
-            await verifyRazorpayPayment(
+            const result = await verifyRazorpayPayment(
               response.razorpay_payment_id,
               response.razorpay_order_id,
               response.razorpay_signature,
               workshopId,
               certName
             );
+            
+            if (result.error) {
+              setError(result.error);
+              setLoading(false);
+              return;
+            }
             
             setSuccess(true);
             router.push('/student');
