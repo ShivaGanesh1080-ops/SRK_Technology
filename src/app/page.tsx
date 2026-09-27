@@ -1,9 +1,8 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, BookOpen, Code, Lightbulb, Users, CheckCircle2 } from "lucide-react";
+import { ArrowRight, BookOpen, Code, Lightbulb, Users, CheckCircle2, Zap } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { FadeIn, FadeInStagger, FadeInItem, SlideInLeft, SlideInRight, ScaleIn } from "@/components/animations/FadeIn";
-import { HeroBackground } from "@/components/animations/HeroBackground";
 import { HoverCard } from "@/components/animations/HoverCard";
 import { TypewriterEffect } from "@/components/animations/TypewriterEffect";
 
@@ -21,34 +20,50 @@ export default async function Home() {
   });
 
   return (
-    <div className="flex flex-col min-h-screen">
-      {/* Hero Section */}
-      <section className="relative overflow-hidden bg-slate-900 text-white py-24 sm:py-32">
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2071&auto=format&fit=crop')] bg-cover bg-center opacity-10"></div>
-        <HeroBackground />
-        <div className="container relative mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl text-center">
-          <ScaleIn delay={0.1}>
-            <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight mb-6 leading-tight">
-              Learn Skills.<br className="hidden sm:block" /> 
-              Build Things.<br className="hidden sm:block" /> 
-              Become <TypewriterEffect words={["Industry Ready.", "A Developer.", "Unstoppable.", "A Leader."]} />
+    <div className="flex flex-col min-h-screen bg-zinc-950 selection:bg-indigo-500/30">
+      {/* 1. THE HERO (Vercel/Linear Style - Dark, Grid, Glowing, Elite) */}
+      <section className="relative overflow-hidden min-h-[90vh] flex items-center justify-center border-b border-white/5">
+        {/* Animated Grid Background */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] pointer-events-none"></div>
+        
+        {/* Glowing Orb */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-indigo-600/30 rounded-full blur-[120px] pointer-events-none"></div>
+        <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] bg-blue-600/20 rounded-full blur-[100px] pointer-events-none mix-blend-screen"></div>
+
+        <div className="container relative mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl text-center z-10 pt-20">
+          <FadeIn delay={0.1}>
+            <div className="inline-flex items-center rounded-full border border-indigo-500/30 bg-indigo-500/10 px-3 py-1 text-sm font-medium text-indigo-300 mb-8 backdrop-blur-sm">
+              <span className="flex h-2 w-2 rounded-full bg-indigo-500 mr-2 animate-pulse"></span>
+              Bridging the gap between theory and industry
+            </div>
+          </FadeIn>
+          
+          <ScaleIn delay={0.2}>
+            <h1 className="text-5xl sm:text-7xl md:text-8xl font-black tracking-tighter mb-8 text-transparent bg-clip-text bg-gradient-to-b from-white to-white/60 drop-shadow-sm leading-[1.1]">
+              Learn Skills.<br /> 
+              Build Things.<br /> 
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400">
+                Become <TypewriterEffect words={["Industry Ready.", "A Developer.", "Unstoppable.", "A Leader."]} />
+              </span>
             </h1>
           </ScaleIn>
-          <FadeIn delay={0.3}>
-            <p className="mt-4 text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto mb-10">
-              SRK brings practical, hands-on technology learning to college students through workshops, bootcamps and skill-development programs.
+          
+          <FadeIn delay={0.4}>
+            <p className="mt-6 text-lg sm:text-2xl text-zinc-400 max-w-3xl mx-auto mb-12 font-light tracking-wide">
+              We bring practical, hands-on technology learning to college students through elite workshops, bootcamps and skill-development programs.
             </p>
           </FadeIn>
-          <FadeIn delay={0.5}>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          
+          <FadeIn delay={0.6}>
+            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
               <Link href="/workshops">
-                <Button size="lg" className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white border-0 transition-transform hover:scale-105 active:scale-95 duration-200">
-                  Explore Workshops
+                <Button size="lg" className="h-14 px-8 text-lg rounded-full bg-white text-black hover:bg-zinc-200 border-0 transition-all hover:scale-105 active:scale-95 shadow-[0_0_40px_-10px_rgba(255,255,255,0.3)]">
+                  Explore Workshops <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
               </Link>
               <Link href="/colleges">
-                <Button size="lg" variant="outline" className="w-full sm:w-auto text-slate-900 border-slate-700 hover:bg-slate-800 hover:text-white transition-transform hover:scale-105 active:scale-95 duration-200">
-                  Partner With SRK
+                <Button size="lg" variant="outline" className="h-14 px-8 text-lg rounded-full border-zinc-700 text-zinc-300 bg-zinc-900/50 hover:bg-zinc-800 hover:text-white backdrop-blur-md transition-all hover:scale-105 active:scale-95">
+                  Partner With Us
                 </Button>
               </Link>
             </div>
@@ -56,115 +71,76 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* The Problem Section */}
-      <section className="py-24 bg-white overflow-hidden">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
+      {/* 2. THE PROBLEM (Apple Minimalist - Sharp transition to White, Massive Typography) */}
+      <section className="py-32 bg-white relative">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
           <SlideInLeft>
-            <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl mb-4">
-                We saw a gap between what students learn and what they get to build.
-              </h2>
-              <p className="text-lg text-slate-600 max-w-3xl mx-auto">
-                Technology evolves rapidly. Students need more hands-on exposure to emerging tools, while colleges need reliable technical training partners to bridge the gap between theory and industry practice.
-              </p>
-            </div>
+            <h2 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tighter text-black mb-8 leading-tight">
+              The degree gives you a foundation. <br/>
+              <span className="text-zinc-400">Your skills build your future.</span>
+            </h2>
           </SlideInLeft>
           
-          <FadeInStagger className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+          <SlideInRight delay={0.2}>
+            <p className="text-xl sm:text-3xl text-zinc-600 font-medium max-w-3xl leading-relaxed">
+              Technology is evolving faster than standard curricula can keep up. Students need hands-on exposure to emerging tools, and colleges need a reliable partner to bridge that gap.
+            </p>
+          </SlideInRight>
+        </div>
+      </section>
+
+      {/* 3. THE SOLUTION (Stripe Playful - Vibrant, 3D Hovers, Bright Icons) */}
+      <section className="py-24 bg-zinc-50 border-t border-zinc-200">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+          <FadeInStagger className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            
             <FadeInItem>
-              <HoverCard className="p-8 h-full bg-white rounded-2xl border border-slate-100 shadow-sm flex flex-col items-center group">
-                <div className="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center text-blue-600 mb-6 transform transition-all duration-500 group-hover:-translate-y-2 group-hover:rotate-12 group-hover:scale-110 group-hover:shadow-lg">
+              <div className="group h-full bg-white rounded-3xl p-8 shadow-sm hover:shadow-2xl hover:shadow-blue-500/20 border border-zinc-100 transition-all duration-500 hover:-translate-y-2 relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-150 duration-700"></div>
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center text-white mb-8 shadow-lg shadow-blue-500/30 transform transition-transform group-hover:rotate-12 group-hover:scale-110 duration-500">
                   <BookOpen className="w-8 h-8" />
                 </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-3">Academic Foundation</h3>
-                <p className="text-slate-600">Strong theoretical knowledge provided by university curriculum.</p>
-              </HoverCard>
+                <h3 className="text-2xl font-bold text-zinc-900 mb-4 tracking-tight">Academic Foundation</h3>
+                <p className="text-zinc-600 text-lg leading-relaxed">Strong theoretical knowledge provided by the standard university curriculum.</p>
+              </div>
             </FadeInItem>
-            <FadeInItem className="relative">
-              <div className="hidden md:block absolute top-1/2 -left-4 w-[calc(100%+2rem)] h-0.5 bg-gradient-to-r from-blue-100 via-amber-100 to-green-100 -z-10 -translate-y-1/2"></div>
-              <HoverCard className="p-8 h-full bg-white rounded-2xl border border-slate-100 shadow-sm flex flex-col items-center relative z-10 group">
-                <div className="w-16 h-16 bg-amber-50 rounded-2xl flex items-center justify-center text-amber-600 mb-6 transform transition-all duration-500 group-hover:-translate-y-2 group-hover:rotate-12 group-hover:scale-110 group-hover:shadow-lg">
+
+            <FadeInItem>
+              <div className="group h-full bg-white rounded-3xl p-8 shadow-sm hover:shadow-2xl hover:shadow-purple-500/20 border border-zinc-100 transition-all duration-500 hover:-translate-y-2 relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/10 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-150 duration-700"></div>
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white mb-8 shadow-lg shadow-purple-500/30 transform transition-transform group-hover:-rotate-12 group-hover:scale-110 duration-500">
                   <Lightbulb className="w-8 h-8" />
                 </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-3">The Skill Gap</h3>
-                <p className="text-slate-600">Limited access to structured, hands-on technical training.</p>
-              </HoverCard>
+                <h3 className="text-2xl font-bold text-zinc-900 mb-4 tracking-tight">The Skill Gap</h3>
+                <p className="text-zinc-600 text-lg leading-relaxed">The missing link: access to structured, hands-on, modern technical training.</p>
+              </div>
             </FadeInItem>
+
             <FadeInItem>
-              <HoverCard className="p-8 h-full bg-white rounded-2xl border border-slate-100 shadow-sm flex flex-col items-center group">
-                <div className="w-16 h-16 bg-green-50 rounded-2xl flex items-center justify-center text-green-600 mb-6 transform transition-all duration-500 group-hover:-translate-y-2 group-hover:rotate-12 group-hover:scale-110 group-hover:shadow-lg">
+              <div className="group h-full bg-white rounded-3xl p-8 shadow-sm hover:shadow-2xl hover:shadow-green-500/20 border border-zinc-100 transition-all duration-500 hover:-translate-y-2 relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-green-500/10 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-150 duration-700"></div>
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-400 to-green-600 flex items-center justify-center text-white mb-8 shadow-lg shadow-green-500/30 transform transition-transform group-hover:rotate-12 group-hover:scale-110 duration-500">
                   <Code className="w-8 h-8" />
                 </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-3">Practical Experience</h3>
-                <p className="text-slate-600">Building real projects with modern tools and industry standards.</p>
-              </HoverCard>
+                <h3 className="text-2xl font-bold text-zinc-900 mb-4 tracking-tight">Practical Experience</h3>
+                <p className="text-zinc-600 text-lg leading-relaxed">Building real projects with modern tools, mentored by industry experts.</p>
+              </div>
             </FadeInItem>
+
           </FadeInStagger>
         </div>
       </section>
 
-      {/* The Question Section */}
-      <section className="py-24 bg-slate-50 border-y border-slate-200 overflow-hidden">
-        <ScaleIn className="container mx-auto px-4 sm:px-6 lg:px-8 text-center max-w-4xl">
-          <p className="text-sm font-bold uppercase tracking-wider text-slate-500 mb-4">So we asked a simple question...</p>
-          <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-slate-900 mb-12">
-            What if practical learning could come to the student?
-          </h2>
-          <div className="flex flex-wrap justify-center items-center gap-4 text-lg sm:text-xl font-medium text-slate-700 mb-12">
-            <span className="hover:scale-110 transition-transform cursor-default">Students</span>
-            <span className="text-blue-500 hover:rotate-180 transition-transform duration-500">+</span>
-            <span className="hover:scale-110 transition-transform cursor-default">Technology</span>
-            <span className="text-blue-500 hover:rotate-180 transition-transform duration-500">+</span>
-            <span className="hover:scale-110 transition-transform cursor-default">Practical Skills</span>
-            <span className="text-blue-500 hover:rotate-180 transition-transform duration-500">+</span>
-            <span className="hover:scale-110 transition-transform cursor-default">Hands-on Experience</span>
-          </div>
-          <p className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">That question became SRK.</p>
-        </ScaleIn>
-      </section>
+      {/* 4. WORKSHOPS SECTION (Glassmorphism / Neon Dark Mode) */}
+      <section className="py-32 bg-zinc-950 relative overflow-hidden">
+        {/* Abstract background shapes */}
+        <div className="absolute top-1/2 left-0 w-96 h-96 bg-indigo-600/20 rounded-full blur-[120px] -translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
+        <div className="absolute top-1/2 right-0 w-96 h-96 bg-blue-600/20 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
 
-      {/* Meet SRK */}
-      <section className="py-24 bg-white overflow-hidden">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <SlideInLeft>
-              <h2 className="text-3xl font-bold tracking-tight text-slate-900 mb-6">
-                SRK TECHNOLOGY
-              </h2>
-              <p className="text-lg text-slate-600 mb-6">
-                A student-focused education and technology skill-development company.
-              </p>
-              <p className="text-slate-600 mb-8">
-                SRK connects students with practical technology experiences through workshops, bootcamps and structured skill-development programs. We believe in learning by doing.
-              </p>
-              <ul className="space-y-4">
-                {["Expert-led practical sessions", "Project-based learning approach", "Industry-relevant curriculum", "Verifiable digital certificates"].map((item, i) => (
-                  <li key={i} className="flex items-start group">
-                    <CheckCircle2 className="w-5 h-5 text-green-500 mr-3 shrink-0 mt-0.5 group-hover:scale-125 transition-transform" />
-                    <span className="text-slate-700 group-hover:text-slate-900 transition-colors">{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </SlideInLeft>
-            <SlideInRight delay={0.2} className="relative h-96 rounded-2xl overflow-hidden shadow-2xl group">
-              <div className="absolute inset-0 bg-slate-900/20 group-hover:bg-slate-900/0 transition-colors duration-700 z-10 pointer-events-none"></div>
-              <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=2070&auto=format&fit=crop" alt="Students collaborating" className="object-cover w-full h-full transform transition-transform duration-[2s] group-hover:scale-125" />
-            </SlideInRight>
-          </div>
-        </div>
-      </section>
-
-      {/* Upcoming Workshops */}
-      <section className="py-24 bg-slate-50 overflow-hidden">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-          <SlideInLeft className="flex justify-between items-end mb-12">
-            <div>
-              <h2 className="text-3xl font-bold tracking-tight text-slate-900 mb-4">Upcoming Workshops</h2>
-              <p className="text-slate-600">Practical technology sessions starting soon.</p>
-            </div>
-            <Link href="/workshops" className="hidden sm:flex items-center text-blue-600 font-medium hover:text-blue-700 transition-transform hover:translate-x-2">
-              View all <ArrowRight className="ml-1 w-4 h-4" />
-            </Link>
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
+          <SlideInLeft className="mb-16">
+            <h2 className="text-4xl md:text-5xl font-black tracking-tight text-white mb-4">Upcoming Programs</h2>
+            <p className="text-xl text-zinc-400 max-w-2xl">Practical, immersive technology sessions designed to make you industry-ready.</p>
           </SlideInLeft>
           
           <FadeInStagger className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -173,66 +149,78 @@ export default async function Home() {
               const isClosed = new Date(workshop.registrationDeadline) < new Date();
               return (
               <FadeInItem key={workshop.id}>
-                <HoverCard className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden flex flex-col hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 h-full group">
+                <div className="group h-full bg-zinc-900/50 backdrop-blur-xl rounded-3xl border border-white/10 overflow-hidden hover:border-indigo-500/50 transition-colors duration-500 flex flex-col">
                   
                 {workshop.imageUrl && (
-                  <div className="h-48 w-full overflow-hidden">
-                    <img src={workshop.imageUrl} alt={workshop.title} className="w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-110" />
+                  <div className="h-56 w-full overflow-hidden relative">
+                    <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 to-transparent z-10"></div>
+                    <img src={workshop.imageUrl} alt={workshop.title} className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-110" />
                   </div>
                 )}
-                <div className="p-6 flex-1 flex flex-col">
-                  <div className="flex justify-between items-start mb-4">
-                    <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
+                
+                <div className="p-8 flex-1 flex flex-col relative z-20 -mt-12">
+                  <div className="flex justify-between items-center mb-6">
+                    <span className="inline-flex items-center rounded-full bg-indigo-500/20 px-3 py-1 text-xs font-semibold text-indigo-300 border border-indigo-500/30 backdrop-blur-md shadow-[0_0_15px_rgba(99,102,241,0.2)]">
                       {workshop.domain?.title || workshop.domainId}
                     </span>
-                    <span className={`inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset ${isFull || isClosed ? "bg-amber-50 text-amber-700 ring-amber-600/20" : "bg-green-50 text-green-700 ring-green-600/20"}`}>
+                    <span className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-bold ${isFull || isClosed ? "bg-red-500/20 text-red-400 border border-red-500/30" : "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30"}`}>
                       {isFull ? "FULL" : isClosed ? "CLOSED" : "OPEN"}
                     </span>
                   </div>
-                  <h3 className="text-xl font-bold text-slate-900 mb-2">{workshop.title}</h3>
-                  <p className="text-slate-600 text-sm mb-4 line-clamp-2">{workshop.shortDescription}</p>
                   
-                  <div className="space-y-2 text-sm text-slate-500 mb-6">
-                    <div className="flex items-center"><span className="w-24 font-medium text-slate-700">Duration:</span> {workshop.duration}</div>
-                    <div className="flex items-center"><span className="w-24 font-medium text-slate-700">Mode:</span> {workshop.mode}</div>
+                  <h3 className="text-2xl font-bold text-white mb-3 leading-tight">{workshop.title}</h3>
+                  <p className="text-zinc-400 text-base mb-6 line-clamp-2">{workshop.shortDescription}</p>
+                  
+                  <div className="space-y-3 text-sm text-zinc-300 mb-8 flex-1">
+                    <div className="flex items-center bg-white/5 rounded-lg p-2"><span className="w-24 font-semibold text-zinc-500">Duration</span> {workshop.duration}</div>
+                    <div className="flex items-center bg-white/5 rounded-lg p-2"><span className="w-24 font-semibold text-zinc-500">Mode</span> {workshop.mode}</div>
                   </div>
 
-                  <div className="mt-auto pt-6 flex items-center justify-between border-t border-slate-100">
-                    <span className="text-xl font-bold text-slate-900">
+                  <div className="flex items-center justify-between mt-auto">
+                    <span className="text-2xl font-black text-white tracking-tight">
                       {workshop.price === 0 ? "FREE" : `₹${workshop.price}`}
                     </span>
                     <Link href={`/workshops/${workshop.slug}`}>
-                      <Button variant="outline" size="sm" className="group-hover:bg-blue-600 group-hover:text-white group-hover:border-blue-600 transition-colors">
+                      <Button className="rounded-full bg-white text-black hover:bg-indigo-500 hover:text-white transition-all hover:scale-105 active:scale-95 font-bold px-6 shadow-[0_0_20px_rgba(255,255,255,0.1)] group-hover:shadow-[0_0_20px_rgba(99,102,241,0.4)]">
                         Details
                       </Button>
                     </Link>
                   </div>
                 </div>
-                </HoverCard>
+                </div>
               </FadeInItem>
               )
             })}
           </FadeInStagger>
           
-          <div className="mt-12 text-center sm:hidden">
+          <div className="mt-16 text-center">
             <Link href="/workshops">
-              <Button variant="outline" className="w-full">View all workshops</Button>
+              <Button size="lg" variant="outline" className="rounded-full border-zinc-700 text-zinc-300 hover:bg-white hover:text-black transition-all hover:scale-105">
+                View all workshops <ArrowRight className="ml-2 w-4 h-4" />
+              </Button>
             </Link>
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-24 bg-blue-600 text-white overflow-hidden relative">
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center opacity-10 mix-blend-overlay"></div>
-        <ScaleIn className="container relative mx-auto px-4 sm:px-6 lg:px-8 text-center max-w-3xl z-10">
-          <h2 className="text-3xl sm:text-5xl font-bold tracking-tight mb-6">Ready to start building?</h2>
-          <p className="text-xl text-blue-100 mb-10">
-            Join our next workshop and gain the practical skills industry demands.
+      {/* 5. THE FINAL CTA (Stripe/Apple Hybrid - Giant Typography & Vibrant Gradient) */}
+      <section className="py-32 relative overflow-hidden bg-white">
+        <div className="absolute inset-0 bg-gradient-to-br from-indigo-50 via-white to-purple-50"></div>
+        <div className="absolute top-0 right-0 w-1/2 h-full bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-blue-200/50 via-transparent to-transparent opacity-50"></div>
+        
+        <ScaleIn className="container relative mx-auto px-4 sm:px-6 lg:px-8 text-center max-w-4xl z-10">
+          <div className="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-gradient-to-br from-blue-600 to-indigo-600 text-white mb-8 shadow-2xl shadow-blue-500/40">
+            <Zap className="w-10 h-10" />
+          </div>
+          <h2 className="text-5xl sm:text-7xl font-black tracking-tighter text-zinc-900 mb-8 leading-[1.1]">
+            Ready to build <br/> your future?
+          </h2>
+          <p className="text-xl sm:text-2xl text-zinc-500 mb-12 max-w-2xl mx-auto font-medium">
+            Join our next technical cohort and gain the exact practical skills the industry is actively hiring for.
           </p>
           <Link href="/workshops">
-            <Button size="lg" className="bg-white text-blue-600 hover:bg-slate-50 border-0 transition-transform hover:scale-110 active:scale-95 duration-200">
-              Browse Workshops
+            <Button size="lg" className="h-16 px-10 text-xl rounded-full bg-zinc-900 text-white hover:bg-indigo-600 transition-all hover:scale-110 active:scale-95 shadow-2xl shadow-zinc-900/20 group">
+              Start Learning Now <ArrowRight className="ml-3 w-6 h-6 transition-transform group-hover:translate-x-2" />
             </Button>
           </Link>
         </ScaleIn>
