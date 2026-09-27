@@ -5,7 +5,6 @@ import { Button } from '@/components/ui/button'
 import { registerForWorkshop } from '@/app/actions/workshops'
 import { createRazorpayOrder, verifyRazorpayPayment } from '@/app/actions/payment'
 import { useRouter } from 'next/navigation'
-import Script from 'next/script'
 
 // Add Razorpay to window object types
 declare global {
@@ -133,7 +132,6 @@ export default function RegisterButton({
   if (showForm && !success) {
     return (
       <div className="space-y-4 bg-white p-4 rounded-md border border-slate-200">
-        <Script src="https://checkout.razorpay.com/v1/checkout.js" />
         
         <h4 className="font-semibold text-slate-900">Application Form</h4>
         

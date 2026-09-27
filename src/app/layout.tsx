@@ -18,6 +18,8 @@ export const metadata: Metadata = {
   description: "SRK brings practical, hands-on technology learning to college students through workshops, bootcamps and skill-development programs.",
 };
 
+import Script from "next/script";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -29,6 +31,7 @@ export default function RootLayout({
         <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />
+        <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="lazyOnload" />
       </body>
     </html>
   );
