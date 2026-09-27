@@ -24,8 +24,8 @@ export async function Navbar() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center gap-2">
-            <Link href="/" className="flex items-center space-x-2">
-              <img src="/logo.jpg" alt="SRK Technology Logo" className="h-10 w-auto object-contain rounded" />
+            <Link href="/" className="flex items-center space-x-2 group">
+              <span className="text-2xl font-black tracking-tighter bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent group-hover:from-indigo-600 group-hover:to-blue-600 transition-all duration-500">SRK</span>
             </Link>
           </div>
           
