@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Play, RotateCcw, CheckCircle2, Sparkles, Terminal, Copy, Check } from "lucide-react";
+import { Play, RotateCcw, Sparkles, Terminal, Copy, Check } from "lucide-react";
 
 interface CodeSnippet {
   id: string;
@@ -137,24 +137,24 @@ export function InteractiveCodeStudio() {
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto rounded-2xl sm:rounded-3xl border border-white/10 bg-zinc-950/80 backdrop-blur-2xl shadow-2xl shadow-indigo-950/40 overflow-hidden relative">
+    <div className="w-full max-w-4xl mx-auto rounded-3xl border border-slate-200/90 bg-white/95 backdrop-blur-2xl shadow-2xl shadow-indigo-500/15 overflow-hidden relative">
       {/* Top Ambient Glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-24 bg-gradient-to-r from-blue-600/20 via-indigo-500/20 to-purple-600/20 blur-2xl pointer-events-none" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-28 bg-gradient-to-r from-blue-400/20 via-indigo-400/20 to-purple-400/20 blur-3xl pointer-events-none" />
 
       {/* Window Title Bar */}
-      <div className="flex flex-wrap items-center justify-between border-b border-white/10 px-4 py-3 bg-zinc-900/60 gap-3">
+      <div className="flex flex-wrap items-center justify-between border-b border-slate-200/80 px-4 sm:px-6 py-3.5 bg-slate-50/90 gap-3">
         {/* Window controls */}
         <div className="flex items-center gap-2">
-          <span className="w-3 h-3 rounded-full bg-red-500/80 inline-block border border-red-600/40" />
-          <span className="w-3 h-3 rounded-full bg-amber-500/80 inline-block border border-amber-600/40" />
-          <span className="w-3 h-3 rounded-full bg-emerald-500/80 inline-block border border-emerald-600/40" />
-          <span className="ml-3 text-xs font-mono text-zinc-400 hidden sm:inline-block">
-            {currentSnippet.filename} — {currentSnippet.domain}
+          <span className="w-3 h-3 rounded-full bg-red-400 inline-block border border-red-500/30" />
+          <span className="w-3 h-3 rounded-full bg-amber-400 inline-block border border-amber-500/30" />
+          <span className="w-3 h-3 rounded-full bg-emerald-400 inline-block border border-emerald-500/30" />
+          <span className="ml-3 text-xs font-mono text-slate-500 hidden sm:inline-block font-medium">
+            {currentSnippet.filename} — <span className="text-indigo-600 font-semibold">{currentSnippet.domain}</span>
           </span>
         </div>
 
         {/* Tab Switchers */}
-        <div className="flex items-center gap-1 bg-zinc-950/60 p-1 rounded-xl border border-white/5">
+        <div className="flex items-center gap-1 bg-slate-200/60 p-1 rounded-xl border border-slate-300/60">
           {SNIPPETS.map((snippet) => (
             <button
               key={snippet.id}
@@ -162,17 +162,17 @@ export function InteractiveCodeStudio() {
                 setActiveTab(snippet.id);
                 setShowLogs(false);
               }}
-              className={`relative px-3 py-1.5 text-xs font-medium rounded-lg transition-colors duration-200 ${
+              className={`relative px-3 py-1.5 text-xs font-medium rounded-lg transition-colors duration-200 cursor-pointer ${
                 activeTab === snippet.id
-                  ? "text-white"
-                  : "text-zinc-400 hover:text-zinc-200"
+                  ? "text-indigo-900 font-bold"
+                  : "text-slate-600 hover:text-slate-900"
               }`}
             >
               {activeTab === snippet.id && (
                 <motion.span
                   layoutId="activeStudioTab"
-                  className="absolute inset-0 bg-indigo-600/40 border border-indigo-400/30 rounded-lg shadow-sm"
-                  transition={{ type: "spring", stiffness: 350, damping: 25 }}
+                  className="absolute inset-0 bg-white rounded-lg shadow-sm border border-slate-200"
+                  transition={{ type: "spring", stiffness: 400, damping: 28 }}
                 />
               )}
               <span className="relative z-10">{snippet.tabLabel}</span>
@@ -184,17 +184,17 @@ export function InteractiveCodeStudio() {
         <div className="flex items-center gap-2">
           <button
             onClick={handleCopy}
-            className="p-1.5 rounded-lg text-zinc-400 hover:text-white hover:bg-white/5 transition-colors text-xs flex items-center gap-1 border border-white/5"
+            className="p-1.5 rounded-lg text-slate-500 hover:text-slate-900 hover:bg-slate-200/60 transition-colors text-xs flex items-center gap-1 border border-slate-200 cursor-pointer bg-white"
             title="Copy Code"
           >
-            {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+            {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
           </button>
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={handleRun}
             disabled={isRunning}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-black font-bold text-xs shadow-md shadow-emerald-500/20 disabled:opacity-50 transition-all cursor-pointer"
+            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow-md shadow-indigo-500/25 disabled:opacity-50 transition-all cursor-pointer"
           >
             {isRunning ? (
               <>
@@ -212,7 +212,7 @@ export function InteractiveCodeStudio() {
       </div>
 
       {/* Code Editor Body */}
-      <div className="p-4 sm:p-6 font-mono text-xs sm:text-sm leading-relaxed overflow-x-auto bg-zinc-950/90 max-h-[340px] select-text">
+      <div className="p-4 sm:p-6 font-mono text-xs sm:text-sm leading-relaxed overflow-x-auto bg-slate-950 text-slate-100 max-h-[350px] select-text">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentSnippet.id}
@@ -223,24 +223,23 @@ export function InteractiveCodeStudio() {
             className="space-y-1"
           >
             {currentSnippet.code.map((line, idx) => {
-              // Simple syntax styling heuristics
               const isComment = line.trim().startsWith("#") || line.trim().startsWith("//");
               const isKeyword = line.includes("from ") || line.includes("import ") || line.includes("export ") || line.includes("async ") || line.includes("function ") || line.includes("FROM ") || line.includes("RUN ");
               
               return (
                 <div key={idx} className="flex items-start group">
-                  <span className="w-8 shrink-0 text-zinc-600 select-none text-right pr-4 font-mono">
+                  <span className="w-8 shrink-0 text-slate-500 select-none text-right pr-4 font-mono text-xs">
                     {idx + 1}
                   </span>
                   <span
                     className={
                       isComment
-                        ? "text-zinc-500 italic"
+                        ? "text-slate-400 italic"
                         : isKeyword
-                        ? "text-indigo-300 font-semibold"
+                        ? "text-indigo-400 font-semibold"
                         : line.includes("('") || line.includes("(\"")
                         ? "text-cyan-300"
-                        : "text-zinc-200"
+                        : "text-slate-200"
                     }
                   >
                     {line || "\u00A0"}
@@ -260,16 +259,16 @@ export function InteractiveCodeStudio() {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-            className="border-t border-white/10 bg-black/90 p-4 font-mono text-xs text-zinc-300 overflow-hidden"
+            className="border-t border-slate-800 bg-slate-900 p-4 font-mono text-xs text-slate-300 overflow-hidden"
           >
-            <div className="flex items-center justify-between mb-3 text-zinc-400 border-b border-white/5 pb-2">
+            <div className="flex items-center justify-between mb-3 text-slate-400 border-b border-slate-800 pb-2">
               <div className="flex items-center gap-2">
                 <Terminal className="w-3.5 h-3.5 text-emerald-400" />
                 <span className="font-semibold text-emerald-400 uppercase tracking-wider text-[10px]">
                   SRK Cloud Runtime Logs
                 </span>
               </div>
-              <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-[10px] font-bold">
+              <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[10px] font-bold">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                 {currentSnippet.resultBadge}
               </span>
@@ -282,7 +281,7 @@ export function InteractiveCodeStudio() {
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: idx * 0.08 }}
-                  className="text-zinc-300 flex items-center gap-2"
+                  className="text-slate-200 flex items-center gap-2"
                 >
                   <span>{log}</span>
                 </motion.div>

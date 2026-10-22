@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { ScrollProgressBar } from "@/components/animations/MotionDev";
 import { HeroSection } from "@/components/landing/HeroSection";
 import { MarqueeTicker } from "@/components/landing/MarqueeTicker";
 import { MetricsSection } from "@/components/landing/MetricsSection";
@@ -58,7 +59,10 @@ export default async function Home() {
   }));
 
   return (
-    <div className="flex flex-col min-h-screen bg-zinc-950 text-white selection:bg-indigo-500/30 selection:text-white overflow-x-hidden">
+    <div className="flex flex-col min-h-screen bg-white text-slate-900 selection:bg-indigo-600 selection:text-white overflow-x-hidden">
+      {/* Scroll Depth Progress Bar (Motion.dev) */}
+      <ScrollProgressBar />
+
       {/* 1. Kinetic Hero with Interactive Code Studio & Terminal */}
       <HeroSection />
 

@@ -4,7 +4,26 @@ import { motion, useScroll, useTransform, useSpring, useMotionValue, useInView }
 import { ReactNode, useRef, useState, useEffect } from "react";
 
 // ============================================================================
-// 1. MAGNETIC ELEMENT (Spring physics cursor attraction)
+// 1. SCROLL PROGRESS BAR (Motion.dev top scroll depth indicator)
+// ============================================================================
+export function ScrollProgressBar() {
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 200,
+    damping: 30,
+    restDelta: 0.001
+  });
+
+  return (
+    <motion.div
+      style={{ scaleX }}
+      className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 origin-left z-50 pointer-events-none shadow-sm shadow-indigo-500/40"
+    />
+  );
+}
+
+// ============================================================================
+// 2. MAGNETIC ELEMENT (Spring physics cursor attraction)
 // ============================================================================
 export function Magnetic({ 
   children, 
@@ -51,16 +70,15 @@ export function Magnetic({
   );
 }
 
-// Retain alias for backward compatibility
 export const MagneticButton = Magnetic;
 
 // ============================================================================
-// 2. SPOTLIGHT CARD (Mouse-following radial gradient glow)
+// 3. SPOTLIGHT CARD (Light theme mouse-following illumination)
 // ============================================================================
 export function SpotlightCard({
   children,
   className = "",
-  spotlightColor = "rgba(99, 102, 241, 0.18)",
+  spotlightColor = "rgba(99, 102, 241, 0.12)",
 }: {
   children: ReactNode;
   className?: string;
@@ -85,13 +103,13 @@ export function SpotlightCard({
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className={`relative overflow-hidden rounded-3xl border border-white/10 bg-zinc-900/60 backdrop-blur-xl transition-all duration-300 ${className}`}
+      className={`relative overflow-hidden rounded-3xl border border-slate-200/80 bg-white/80 backdrop-blur-xl shadow-lg shadow-slate-200/50 transition-all duration-300 hover:shadow-xl hover:shadow-indigo-500/10 hover:border-indigo-400/50 ${className}`}
     >
       <div
         className="pointer-events-none absolute -inset-px transition-opacity duration-300"
         style={{
           opacity: isHovered ? 1 : 0,
-          background: `radial-gradient(600px circle at ${coords.x}px ${coords.y}px, ${spotlightColor}, transparent 40%)`,
+          background: `radial-gradient(550px circle at ${coords.x}px ${coords.y}px, ${spotlightColor}, transparent 45%)`,
         }}
       />
       <div className="relative z-10 h-full">{children}</div>
@@ -100,12 +118,12 @@ export function SpotlightCard({
 }
 
 // ============================================================================
-// 3. 3D TILT CARD (Perspective tilt with specular shine)
+// 4. 3D TILT CARD (Perspective tilt with specular shine)
 // ============================================================================
 export function TiltCard({
   children,
   className = "",
-  maxAngle = 10,
+  maxAngle = 8,
 }: {
   children: ReactNode;
   className?: string;
@@ -146,7 +164,7 @@ export function TiltCard({
           rotateY,
           transformStyle: "preserve-3d",
         }}
-        whileHover={{ scale: 1.02 }}
+        whileHover={{ scale: 1.015 }}
         transition={{ duration: 0.2 }}
         className={`h-full ${className}`}
       >
@@ -157,7 +175,7 @@ export function TiltCard({
 }
 
 // ============================================================================
-// 4. BORDER BEAM (Linear/Motion.dev glowing perimeter circuit)
+// 5. BORDER BEAM (Linear/Motion.dev glowing perimeter circuit)
 // ============================================================================
 export function BorderBeam({
   duration = 8,
@@ -174,7 +192,7 @@ export function BorderBeam({
       className={`pointer-events-none absolute inset-0 overflow-hidden rounded-[inherit] [mask-image:linear-gradient(white,white)] ${className}`}
     >
       <motion.div
-        className="absolute aspect-square bg-[radial-gradient(ellipse_at_center,rgba(99,102,241,0.8),rgba(168,85,247,0.4),transparent_70%)]"
+        className="absolute aspect-square bg-[radial-gradient(ellipse_at_center,rgba(99,102,241,0.6),rgba(59,130,246,0.3),transparent_70%)]"
         style={{
           width: size,
           height: size,
@@ -194,7 +212,7 @@ export function BorderBeam({
 }
 
 // ============================================================================
-// 5. WORD REVEAL (Kinetic typography with blur & stagger)
+// 6. WORD REVEAL (Kinetic typography with blur & stagger)
 // ============================================================================
 export function WordReveal({ 
   text, 
@@ -239,7 +257,7 @@ export function WordReveal({
 }
 
 // ============================================================================
-// 6. PARALLAX HERO (Multi-layer scroll depth)
+// 7. PARALLAX HERO (Multi-layer scroll depth)
 // ============================================================================
 export function ParallaxHero({ 
   children, 
@@ -250,9 +268,9 @@ export function ParallaxHero({
 }) {
   const ref = useRef(null);
   const { scrollY } = useScroll();
-  const y = useTransform(scrollY, [0, 800], [0, 250]);
-  const opacity = useTransform(scrollY, [0, 600], [1, 0.2]);
-  const scale = useTransform(scrollY, [0, 800], [1, 0.95]);
+  const y = useTransform(scrollY, [0, 800], [0, 220]);
+  const opacity = useTransform(scrollY, [0, 600], [1, 0.3]);
+  const scale = useTransform(scrollY, [0, 800], [1, 0.96]);
 
   return (
     <motion.div ref={ref} style={{ y, opacity, scale }} className={className}>
@@ -262,7 +280,7 @@ export function ParallaxHero({
 }
 
 // ============================================================================
-// 7. FLOAT CONTINUOUS (Harmonic floating elements)
+// 8. FLOAT CONTINUOUS (Harmonic floating elements)
 // ============================================================================
 export function FloatContinuous({ 
   children, 
@@ -299,7 +317,7 @@ export function FloatContinuous({
 }
 
 // ============================================================================
-// 8. ANIMATED COUNTER (Spring physics number roll-up on scroll)
+// 9. ANIMATED COUNTER (Spring physics number roll-up on scroll)
 // ============================================================================
 export function AnimatedCounter({
   target,
@@ -322,7 +340,6 @@ export function AnimatedCounter({
     const step = (timestamp: number) => {
       if (!startTimestamp) startTimestamp = timestamp;
       const progress = Math.min((timestamp - startTimestamp) / (duration * 1000), 1);
-      // Ease out quart
       const easeProgress = 1 - Math.pow(1 - progress, 4);
       setDisplayValue(Math.floor(easeProgress * target));
       if (progress < 1) {
@@ -344,7 +361,7 @@ export function AnimatedCounter({
 }
 
 // ============================================================================
-// 9. KINETIC MARQUEE (Infinite smooth GPU ticker)
+// 10. KINETIC MARQUEE (Infinite smooth GPU ticker with gradient masks)
 // ============================================================================
 export function KineticMarquee({
   children,

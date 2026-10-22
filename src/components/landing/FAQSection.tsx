@@ -45,17 +45,17 @@ export function FAQSection() {
   };
 
   return (
-    <section className="py-24 sm:py-32 bg-zinc-950 relative overflow-hidden border-t border-white/5">
+    <section className="py-24 sm:py-32 bg-slate-50/60 relative overflow-hidden border-t border-slate-200/80">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl relative z-10">
         <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-xs font-semibold text-indigo-300 mb-4 backdrop-blur-md">
-            <HelpCircle className="w-4 h-4 text-indigo-400" />
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-50 border border-indigo-200 text-xs font-semibold text-indigo-700 mb-4 shadow-sm">
+            <HelpCircle className="w-4 h-4 text-indigo-600" />
             <span>Frequently Asked Questions</span>
           </div>
-          <h2 className="text-3xl sm:text-5xl font-black tracking-tight text-white mb-4">
+          <h2 className="text-3xl sm:text-5xl font-black tracking-tight text-slate-900 mb-4">
             Everything You Need to Know.
           </h2>
-          <p className="text-base sm:text-lg text-zinc-400">
+          <p className="text-base sm:text-lg text-slate-600">
             Clear answers about our workshops, hands-on methodology, certificates, and college partnerships.
           </p>
         </div>
@@ -66,20 +66,20 @@ export function FAQSection() {
             return (
               <SpotlightCard
                 key={idx}
-                spotlightColor="rgba(99, 102, 241, 0.15)"
-                className="border-white/10 overflow-hidden"
+                spotlightColor="rgba(99, 102, 241, 0.08)"
+                className="border-slate-200/90 bg-white shadow-md shadow-slate-100 overflow-hidden"
               >
                 <button
                   onClick={() => toggle(idx)}
                   className="w-full p-6 sm:p-7 text-left flex items-center justify-between gap-4 cursor-pointer focus:outline-none"
                 >
-                  <span className="text-base sm:text-lg font-bold text-white tracking-tight">
+                  <span className="text-base sm:text-lg font-bold text-slate-900 tracking-tight">
                     {faq.question}
                   </span>
                   <motion.div
                     animate={{ rotate: isOpen ? 180 : 0 }}
                     transition={{ duration: 0.3 }}
-                    className="p-1.5 rounded-full bg-white/5 text-zinc-400 shrink-0 border border-white/10"
+                    className="p-1.5 rounded-full bg-slate-100 text-slate-600 shrink-0 border border-slate-200"
                   >
                     <ChevronDown className="w-4 h-4" />
                   </motion.div>
@@ -94,7 +94,7 @@ export function FAQSection() {
                       transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
                       className="overflow-hidden"
                     >
-                      <div className="px-6 sm:px-7 pb-6 sm:pb-7 pt-1 text-sm sm:text-base text-zinc-400 leading-relaxed border-t border-white/5">
+                      <div className="px-6 sm:px-7 pb-6 sm:pb-7 pt-1 text-sm sm:text-base text-slate-600 leading-relaxed border-t border-slate-100">
                         {faq.answer}
                       </div>
                     </motion.div>

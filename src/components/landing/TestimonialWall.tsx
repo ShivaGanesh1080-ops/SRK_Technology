@@ -1,7 +1,7 @@
 "use client";
 
 import { SpotlightCard, TiltCard } from "@/components/animations/MotionDev";
-import { Star, Quote, CheckCircle2, Award } from "lucide-react";
+import { Star, CheckCircle2 } from "lucide-react";
 import { motion } from "framer-motion";
 
 const TESTIMONIALS = [
@@ -45,9 +45,9 @@ const TESTIMONIALS = [
 
 export function TestimonialWall() {
   return (
-    <section className="py-24 sm:py-32 bg-zinc-950 relative overflow-hidden border-t border-white/5">
+    <section className="py-24 sm:py-32 bg-white relative overflow-hidden border-t border-slate-200/80">
       {/* Background radial glow */}
-      <div className="absolute top-1/3 right-1/4 w-[600px] h-[300px] bg-purple-600/10 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute top-1/3 right-1/4 w-[650px] h-[350px] bg-purple-100/50 rounded-full blur-[140px] pointer-events-none" />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-16">
@@ -57,14 +57,14 @@ export function TestimonialWall() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-xs font-semibold text-amber-300 mb-4 backdrop-blur-md">
-              <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-50 border border-amber-200 text-xs font-semibold text-amber-800 mb-4 shadow-sm">
+              <Star className="w-4 h-4 text-amber-500 fill-amber-500" />
               <span>Voice of Participants & Partners</span>
             </div>
-            <h2 className="text-3xl sm:text-5xl font-black tracking-tight text-white mb-4">
+            <h2 className="text-3xl sm:text-5xl font-black tracking-tight text-slate-900 mb-4">
               Endorsed by Students and Campuses.
             </h2>
-            <p className="text-base sm:text-lg text-zinc-400">
+            <p className="text-base sm:text-lg text-slate-600">
               Hear directly from engineers and training coordinators who experienced our build-first workshop sprints.
             </p>
           </motion.div>
@@ -82,8 +82,8 @@ export function TestimonialWall() {
             >
               <TiltCard maxAngle={5}>
                 <SpotlightCard
-                  spotlightColor="rgba(168, 85, 247, 0.2)"
-                  className="p-8 h-full flex flex-col justify-between border-white/10 hover:border-purple-500/30"
+                  spotlightColor="rgba(168, 85, 247, 0.12)"
+                  className="p-8 h-full flex flex-col justify-between bg-white border-slate-200/90 shadow-xl shadow-slate-200/40 hover:border-purple-300"
                 >
                   <div>
                     {/* Stars & Tag */}
@@ -93,28 +93,28 @@ export function TestimonialWall() {
                           <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
                         ))}
                       </div>
-                      <span className="text-[11px] font-mono font-bold text-purple-300 bg-purple-500/10 px-3 py-1 rounded-full border border-purple-500/20">
+                      <span className="text-[11px] font-mono font-bold text-purple-800 bg-purple-50 px-3 py-1 rounded-full border border-purple-200">
                         {t.tag}
                       </span>
                     </div>
 
                     {/* Quote */}
-                    <p className="text-base sm:text-lg text-zinc-200 font-normal leading-relaxed mb-6 italic">
+                    <p className="text-base sm:text-lg text-slate-800 font-normal leading-relaxed mb-6 italic">
                       "{t.quote}"
                     </p>
                   </div>
 
                   {/* Author Info */}
-                  <div className="pt-6 border-t border-white/5 flex items-center justify-between">
+                  <div className="pt-6 border-t border-slate-100 flex items-center justify-between">
                     <div>
-                      <div className="font-bold text-white text-sm sm:text-base flex items-center gap-1.5">
+                      <div className="font-bold text-slate-900 text-sm sm:text-base flex items-center gap-1.5">
                         <span>{t.name}</span>
-                        <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                        <CheckCircle2 className="w-4 h-4 text-emerald-600" />
                       </div>
-                      <div className="text-xs text-zinc-400 mt-0.5">
+                      <div className="text-xs text-slate-500 mt-0.5">
                         {t.role} • {t.college}
                       </div>
-                      <div className="text-[11px] font-mono text-indigo-400 mt-1">
+                      <div className="text-[11px] font-mono text-indigo-700 mt-1 font-semibold">
                         Track: {t.workshop}
                       </div>
                     </div>
