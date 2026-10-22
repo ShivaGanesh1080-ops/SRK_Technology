@@ -1,10 +1,10 @@
-﻿import { prisma  } from "@/lib/prisma";
+import { prisma } from "@/lib/prisma";
 import { notFound, redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { ShieldCheck } from "lucide-react";
+import { ShieldCheck, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { PremiumCertificate } from "@/components/PremiumCertificate";
-
+import { PrintButton } from "@/components/PrintButton";
 
 export default async function CertificatePage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -43,32 +43,35 @@ export default async function CertificatePage({ params }: { params: Promise<{ id
   const studentName = registration.certificateName || registration.user.studentProfile?.fullName || registration.user.email;
   const dateIssued = new Date(registration.updatedAt).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
   const certificateId = `SRK-${registration.id}`;
-  const instructorName = registration.workshop.trainer?.fullName || "SRK TECHNOLOGY";
+  const instructorName = registration.workshop.trainer?.fullName || "R. Phani Koteshwar Rao";
 
   return (
     <div className="min-h-screen bg-slate-100 py-12 px-4 print:bg-white print:p-0 print:py-0 flex flex-col items-center">
-      <div className="w-full max-w-5xl mx-auto mb-8 print:hidden flex justify-between items-center bg-white p-4 rounded-xl shadow-sm border border-green-200">
-        <div className="flex items-center text-green-700">
-          <ShieldCheck className="w-6 h-6 mr-2" />
-          <span className="font-medium">Your Verified Certificate</span>
+      <div className="w-full max-w-5xl mx-auto mb-8 print:hidden flex flex-wrap justify-between items-center bg-white p-4 rounded-xl shadow-sm border border-emerald-200 gap-4">
+        <div className="flex items-center text-emerald-700">
+          <ShieldCheck className="w-6 h-6 mr-2 shrink-0" />
+          <span className="font-semibold text-sm">Official Verified Certificate Issued</span>
         </div>
-        <div className="flex gap-4">
-          <Link href="/student" className="text-slate-600 hover:text-slate-900 px-4 py-2 font-medium">
-            Back to Dashboard
+        <div className="flex items-center gap-3">
+          <Link href="/student" className="inline-flex items-center gap-1.5 text-slate-600 hover:text-slate-900 px-3.5 py-2 font-medium text-sm">
+            <ArrowLeft className="w-4 h-4" />
+            <span>Dashboard</span>
           </Link>
-          <button onClick={() => typeof window !== "undefined" && window.print()} className="bg-[#0f172a] text-white px-6 py-2 rounded-md font-medium hover:bg-slate-800 transition-colors shadow-sm">
-            Print / Save as PDF
-          </button>
+          <PrintButton />
         </div>
       </div>
 
-      <PremiumCertificate 
-        studentName={studentName}
-        workshopTitle={registration.workshop.title}
-        dateIssued={dateIssued}
-        certificateId={certificateId}
-        instructorName={instructorName}
-      />
+      <div className="w-full overflow-x-auto pb-8 flex justify-center">
+        <div className="min-w-[1000px] w-full max-w-5xl">
+          <PremiumCertificate 
+            studentName={studentName}
+            workshopTitle={registration.workshop.title}
+            dateIssued={dateIssued}
+            certificateId={certificateId}
+            instructorName={instructorName}
+          />
+        </div>
+      </div>
     </div>
   );
 }
