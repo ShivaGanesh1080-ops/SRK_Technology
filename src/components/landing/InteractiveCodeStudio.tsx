@@ -137,9 +137,9 @@ export function InteractiveCodeStudio() {
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto rounded-3xl border border-slate-200/90 bg-white/95 backdrop-blur-2xl shadow-2xl shadow-indigo-500/15 overflow-hidden relative">
+    <div className="w-full max-w-4xl mx-auto rounded-3xl border border-slate-200/90 bg-white shadow-2xl shadow-indigo-500/10 overflow-hidden relative" style={{ transform: "translateZ(0)" }}>
       {/* Top Ambient Glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-28 bg-gradient-to-r from-blue-400/20 via-indigo-400/20 to-purple-400/20 blur-3xl pointer-events-none" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-28 bg-[radial-gradient(ellipse_at_top,rgba(99,102,241,0.15),transparent_70%)] pointer-events-none" />
 
       {/* Window Title Bar */}
       <div className="flex flex-wrap items-center justify-between border-b border-slate-200/80 px-4 sm:px-6 py-3.5 bg-slate-50/90 gap-3">

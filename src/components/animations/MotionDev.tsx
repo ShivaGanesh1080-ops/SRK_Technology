@@ -1,23 +1,23 @@
 "use client";
 
 import { motion, useScroll, useTransform, useSpring, useMotionValue, useInView } from "framer-motion";
-import { ReactNode, useRef, useState, useEffect } from "react";
+import { ReactNode, useRef, useState, useEffect, useCallback } from "react";
 
 // ============================================================================
-// 1. SCROLL PROGRESS BAR (Motion.dev top scroll depth indicator)
+// 1. SCROLL PROGRESS BAR (GPU-accelerated transform)
 // ============================================================================
 export function ScrollProgressBar() {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
-    stiffness: 200,
+    stiffness: 100,
     damping: 30,
     restDelta: 0.001
   });
 
   return (
     <motion.div
-      style={{ scaleX }}
-      className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 origin-left z-50 pointer-events-none shadow-sm shadow-indigo-500/40"
+      style={{ scaleX, transformOrigin: "0% 50%" }}
+      className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 z-50 pointer-events-none will-change-transform"
     />
   );
 }
@@ -28,7 +28,7 @@ export function ScrollProgressBar() {
 export function Magnetic({ 
   children, 
   className = "", 
-  intensity = 0.35 
+  intensity = 0.25 
 }: { 
   children: ReactNode; 
   className?: string; 
@@ -38,7 +38,7 @@ export function Magnetic({
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
-  const springConfig = { damping: 15, stiffness: 150, mass: 0.1 };
+  const springConfig = { damping: 20, stiffness: 180, mass: 0.1 };
   const springX = useSpring(x, springConfig);
   const springY = useSpring(y, springConfig);
 
@@ -46,10 +46,8 @@ export function Magnetic({
     if (!ref.current) return;
     const { clientX, clientY } = e;
     const { left, top, width, height } = ref.current.getBoundingClientRect();
-    const centerX = left + width / 2;
-    const centerY = top + height / 2;
-    x.set((clientX - centerX) * intensity);
-    y.set((clientY - centerY) * intensity);
+    x.set((clientX - (left + width / 2)) * intensity);
+    y.set((clientY - (top + height / 2)) * intensity);
   };
 
   const handleMouseLeave = () => {
@@ -63,7 +61,7 @@ export function Magnetic({
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       style={{ x: springX, y: springY }}
-      className={`inline-block ${className}`}
+      className={`inline-block will-change-transform ${className}`}
     >
       {children}
     </motion.div>
@@ -73,7 +71,7 @@ export function Magnetic({
 export const MagneticButton = Magnetic;
 
 // ============================================================================
-// 3. SPOTLIGHT CARD (Light theme mouse-following illumination)
+// 3. SPOTLIGHT CARD (Pure CSS Variables - ZERO React re-renders on mousemove!)
 // ============================================================================
 export function SpotlightCard({
   children,
@@ -85,32 +83,34 @@ export function SpotlightCard({
   spotlightColor?: string;
 }) {
   const cardRef = useRef<HTMLDivElement>(null);
-  const [coords, setCoords] = useState({ x: 0, y: 0 });
-  const [isHovered, setIsHovered] = useState(false);
+  const glowRef = useRef<HTMLDivElement>(null);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current) return;
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current || !glowRef.current) return;
     const rect = cardRef.current.getBoundingClientRect();
-    setCoords({
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top,
-    });
-  };
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    glowRef.current.style.opacity = "1";
+    glowRef.current.style.background = `radial-gradient(500px circle at ${x}px ${y}px, ${spotlightColor}, transparent 45%)`;
+  }, [spotlightColor]);
+
+  const handleMouseLeave = useCallback(() => {
+    if (!glowRef.current) return;
+    glowRef.current.style.opacity = "0";
+  }, []);
 
   return (
     <div
       ref={cardRef}
       onMouseMove={handleMouseMove}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      className={`relative overflow-hidden rounded-3xl border border-slate-200/80 bg-white/80 backdrop-blur-xl shadow-lg shadow-slate-200/50 transition-all duration-300 hover:shadow-xl hover:shadow-indigo-500/10 hover:border-indigo-400/50 ${className}`}
+      onMouseLeave={handleMouseLeave}
+      className={`relative overflow-hidden rounded-3xl border border-slate-200/90 bg-white shadow-md shadow-slate-200/50 transition-shadow duration-200 hover:shadow-xl hover:shadow-indigo-500/10 hover:border-indigo-300/80 ${className}`}
+      style={{ transform: "translateZ(0)" }}
     >
       <div
-        className="pointer-events-none absolute -inset-px transition-opacity duration-300"
-        style={{
-          opacity: isHovered ? 1 : 0,
-          background: `radial-gradient(550px circle at ${coords.x}px ${coords.y}px, ${spotlightColor}, transparent 45%)`,
-        }}
+        ref={glowRef}
+        className="pointer-events-none absolute -inset-px opacity-0 transition-opacity duration-200 ease-out"
+        aria-hidden="true"
       />
       <div className="relative z-10 h-full">{children}</div>
     </div>
@@ -118,12 +118,12 @@ export function SpotlightCard({
 }
 
 // ============================================================================
-// 4. 3D TILT CARD (Perspective tilt with specular shine)
+// 4. 3D TILT CARD (Perspective tilt with direct spring values)
 // ============================================================================
 export function TiltCard({
   children,
   className = "",
-  maxAngle = 8,
+  maxAngle = 6,
 }: {
   children: ReactNode;
   className?: string;
@@ -133,19 +133,15 @@ export function TiltCard({
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
-  const springConfig = { damping: 20, stiffness: 200 };
+  const springConfig = { damping: 25, stiffness: 220 };
   const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [maxAngle, -maxAngle]), springConfig);
   const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-maxAngle, maxAngle]), springConfig);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!ref.current) return;
     const rect = ref.current.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
-    const mouseX = e.clientX - rect.left;
-    const mouseY = e.clientY - rect.top;
-    x.set(mouseX / width - 0.5);
-    y.set(mouseY / height - 0.5);
+    x.set((e.clientX - rect.left) / rect.width - 0.5);
+    y.set((e.clientY - rect.top) / rect.height - 0.5);
   };
 
   const handleMouseLeave = () => {
@@ -154,7 +150,7 @@ export function TiltCard({
   };
 
   return (
-    <div style={{ perspective: 1200 }} className="h-full">
+    <div style={{ perspective: 1000 }} className="h-full">
       <motion.div
         ref={ref}
         onMouseMove={handleMouseMove}
@@ -164,9 +160,9 @@ export function TiltCard({
           rotateY,
           transformStyle: "preserve-3d",
         }}
-        whileHover={{ scale: 1.015 }}
-        transition={{ duration: 0.2 }}
-        className={`h-full ${className}`}
+        whileHover={{ scale: 1.01 }}
+        transition={{ duration: 0.15 }}
+        className={`h-full will-change-transform ${className}`}
       >
         {children}
       </motion.div>
@@ -230,7 +226,7 @@ export function WordReveal({
       whileInView="visible"
       viewport={{ once: true, margin: "-50px" }}
       variants={{
-        visible: { transition: { staggerChildren: 0.08, delayChildren: delay } },
+        visible: { transition: { staggerChildren: 0.06, delayChildren: delay } },
       }}
       className={`inline-flex flex-wrap gap-[0.25em] ${className}`}
     >
@@ -239,13 +235,11 @@ export function WordReveal({
           key={i}
           className="inline-block"
           variants={{
-            hidden: { opacity: 0, y: 25, filter: "blur(8px)", rotate: 4 },
+            hidden: { opacity: 0, y: 15 },
             visible: { 
               opacity: 1, 
               y: 0, 
-              filter: "blur(0px)", 
-              rotate: 0, 
-              transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } 
+              transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } 
             }
           }}
         >
@@ -257,7 +251,7 @@ export function WordReveal({
 }
 
 // ============================================================================
-// 7. PARALLAX HERO (Multi-layer scroll depth)
+// 7. PARALLAX HERO (Hardware accelerated transform)
 // ============================================================================
 export function ParallaxHero({ 
   children, 
@@ -268,12 +262,15 @@ export function ParallaxHero({
 }) {
   const ref = useRef(null);
   const { scrollY } = useScroll();
-  const y = useTransform(scrollY, [0, 800], [0, 220]);
-  const opacity = useTransform(scrollY, [0, 600], [1, 0.3]);
-  const scale = useTransform(scrollY, [0, 800], [1, 0.96]);
+  const y = useTransform(scrollY, [0, 600], [0, 120]);
+  const opacity = useTransform(scrollY, [0, 500], [1, 0.6]);
 
   return (
-    <motion.div ref={ref} style={{ y, opacity, scale }} className={className}>
+    <motion.div 
+      ref={ref} 
+      style={{ y, opacity }} 
+      className={`will-change-transform ${className}`}
+    >
       {children}
     </motion.div>
   );
@@ -286,9 +283,8 @@ export function FloatContinuous({
   children, 
   className = "", 
   delay = 0,
-  duration = 4,
-  yOffset = 10,
-  rotateOffset = 3
+  duration = 5,
+  yOffset = 8,
 }: { 
   children: ReactNode; 
   className?: string; 
@@ -301,7 +297,6 @@ export function FloatContinuous({
     <motion.div
       animate={{
         y: [-yOffset, yOffset, -yOffset],
-        rotate: [-rotateOffset, rotateOffset, -rotateOffset]
       }}
       transition={{
         duration,
@@ -309,7 +304,7 @@ export function FloatContinuous({
         ease: "easeInOut",
         delay
       }}
-      className={className}
+      className={`will-change-transform ${className}`}
     >
       {children}
     </motion.div>
@@ -323,7 +318,7 @@ export function AnimatedCounter({
   target,
   suffix = "",
   prefix = "",
-  duration = 2,
+  duration = 1.6,
 }: {
   target: number;
   suffix?: string;
@@ -361,11 +356,11 @@ export function AnimatedCounter({
 }
 
 // ============================================================================
-// 10. KINETIC MARQUEE (Infinite smooth GPU ticker with gradient masks)
+// 10. KINETIC MARQUEE (GPU-accelerated smooth ticker)
 // ============================================================================
 export function KineticMarquee({
   children,
-  speed = 30,
+  speed = 35,
   direction = "left",
   pauseOnHover = true,
   className = "",
@@ -379,7 +374,7 @@ export function KineticMarquee({
   return (
     <div className={`group flex overflow-hidden select-none [mask-image:linear-gradient(to_right,transparent,white_10%,white_90%,transparent)] ${className}`}>
       <motion.div
-        className="flex shrink-0 items-center gap-6"
+        className="flex shrink-0 items-center gap-6 will-change-transform"
         animate={{
           x: direction === "left" ? ["0%", "-50%"] : ["-50%", "0%"],
         }}

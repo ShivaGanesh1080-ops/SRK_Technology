@@ -56,8 +56,8 @@ export function InteractiveWorkshopExplorer({
   return (
     <section className="py-24 sm:py-32 bg-white relative overflow-hidden border-t border-slate-200/80">
       {/* Abstract Background Glows */}
-      <div className="absolute top-1/2 left-0 w-[550px] h-[550px] bg-indigo-100/60 rounded-full blur-[140px] -translate-y-1/2 -translate-x-1/2 pointer-events-none" />
-      <div className="absolute top-1/2 right-0 w-[550px] h-[550px] bg-blue-100/60 rounded-full blur-[140px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+      <div className="absolute top-1/2 left-0 w-[550px] h-[550px] bg-[radial-gradient(circle,rgba(99,102,241,0.08),transparent_70%)] -translate-y-1/2 -translate-x-1/2 pointer-events-none" />
+      <div className="absolute top-1/2 right-0 w-[550px] h-[550px] bg-[radial-gradient(circle,rgba(59,130,246,0.08),transparent_70%)] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
         

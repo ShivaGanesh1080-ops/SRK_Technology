@@ -198,9 +198,9 @@ export function TeamSection() {
 
   return (
     <section className="py-20 sm:py-28 bg-slate-50/60 border-t border-slate-200/80 relative overflow-hidden">
-      {/* Background Soft Pastel Glows */}
-      <div className="absolute top-1/3 left-0 w-[550px] h-[550px] bg-blue-100/50 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute bottom-10 right-0 w-[550px] h-[550px] bg-indigo-100/50 rounded-full blur-[140px] pointer-events-none" />
+      {/* Background Soft Pastel Glows (Radial Gradient GPU-optimized) */}
+      <div className="absolute top-1/3 left-0 w-[550px] h-[550px] bg-[radial-gradient(circle,rgba(59,130,246,0.08),transparent_70%)] pointer-events-none" />
+      <div className="absolute bottom-10 right-0 w-[550px] h-[550px] bg-[radial-gradient(circle,rgba(99,102,241,0.08),transparent_70%)] pointer-events-none" />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
         

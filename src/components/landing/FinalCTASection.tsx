@@ -9,14 +9,14 @@ import { Button } from "@/components/ui/button";
 export function FinalCTASection() {
   return (
     <section className="py-24 sm:py-36 bg-white relative overflow-hidden border-t border-slate-200/80">
-      {/* Background radial spotlights (soft pastel gradients) */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[550px] bg-gradient-to-r from-blue-100/50 via-indigo-100/60 to-purple-100/50 rounded-full blur-[160px] pointer-events-none" />
+      {/* Background radial spotlights (GPU-accelerated gradient) */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[550px] bg-[radial-gradient(ellipse_at_center,rgba(99,102,241,0.12),rgba(59,130,246,0.08),transparent_70%)] pointer-events-none" />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl relative z-10 text-center">
         <TiltCard maxAngle={4}>
           <SpotlightCard
             spotlightColor="rgba(99, 102, 241, 0.15)"
-            className="p-8 sm:p-16 border-slate-200/90 bg-gradient-to-b from-white to-slate-50/80 backdrop-blur-3xl relative overflow-hidden shadow-2xl shadow-indigo-500/10"
+            className="p-8 sm:p-16 border-slate-200/90 bg-gradient-to-b from-white to-slate-50/90 relative overflow-hidden shadow-2xl shadow-indigo-500/10"
           >
             <BorderBeam duration={10} size={300} />
 

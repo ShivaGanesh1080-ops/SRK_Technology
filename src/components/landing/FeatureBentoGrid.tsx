@@ -20,8 +20,8 @@ export function FeatureBentoGrid() {
   return (
     <section className="py-24 sm:py-32 bg-slate-50/50 relative overflow-hidden border-b border-slate-200/80">
       {/* Background radial glows */}
-      <div className="absolute top-1/4 right-0 w-[550px] h-[550px] bg-purple-100/60 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute bottom-10 left-0 w-[550px] h-[550px] bg-blue-100/60 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute top-1/4 right-0 w-[550px] h-[550px] bg-[radial-gradient(circle,rgba(168,85,247,0.08),transparent_70%)] pointer-events-none" />
+      <div className="absolute bottom-10 left-0 w-[550px] h-[550px] bg-[radial-gradient(circle,rgba(59,130,246,0.08),transparent_70%)] pointer-events-none" />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-16">

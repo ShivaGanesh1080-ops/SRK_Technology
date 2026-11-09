@@ -47,7 +47,7 @@ export function TestimonialWall() {
   return (
     <section className="py-24 sm:py-32 bg-white relative overflow-hidden border-t border-slate-200/80">
       {/* Background radial glow */}
-      <div className="absolute top-1/3 right-1/4 w-[650px] h-[350px] bg-purple-100/50 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute top-1/3 right-1/4 w-[650px] h-[350px] bg-[radial-gradient(ellipse_at_center,rgba(168,85,247,0.08),transparent_70%)] pointer-events-none" />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-16">

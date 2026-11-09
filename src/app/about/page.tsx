@@ -8,7 +8,7 @@ export default function AboutPage() {
     <div className="bg-white">
       {/* Header */}
       <header className="bg-slate-50/80 py-16 sm:py-24 border-b border-slate-200/80 relative overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[350px] bg-indigo-100/40 rounded-full blur-[140px] pointer-events-none" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[350px] bg-[radial-gradient(ellipse_at_center,rgba(99,102,241,0.1),transparent_70%)] pointer-events-none" />
         
         <div className="container mx-auto px-4 max-w-4xl text-center relative z-10">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-50 border border-indigo-200 text-xs font-semibold text-indigo-700 mb-6 shadow-sm">

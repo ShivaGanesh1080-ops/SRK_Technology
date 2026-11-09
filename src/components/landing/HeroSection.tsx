@@ -21,21 +21,12 @@ export function HeroSection() {
         className="absolute inset-0 bg-[linear-gradient(to_right,#e2e8f090_1px,transparent_1px),linear-gradient(to_bottom,#e2e8f090_1px,transparent_1px)] bg-[size:3.5rem_3.5rem] [mask-image:radial-gradient(ellipse_70%_65%_at_50%_15%,#000_60%,transparent_100%)] pointer-events-none" 
       />
 
-      {/* 2. Layered Ambient Glowing Auroras (Pastel Light Mode) */}
-      <motion.div
-        animate={{
-          scale: [1, 1.15, 1],
-          opacity: [0.35, 0.55, 0.35],
-        }}
-        transition={{
-          duration: 9,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-        className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/3 w-[950px] h-[600px] bg-gradient-to-b from-indigo-200/50 via-blue-200/40 to-transparent rounded-full blur-[140px] pointer-events-none"
+      {/* 2. Layered Ambient Radial Auroras (GPU-Optimized, Zero-Blur lag) */}
+      <div 
+        className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/3 w-[950px] h-[600px] bg-[radial-gradient(ellipse_at_center,rgba(99,102,241,0.18),rgba(59,130,246,0.12),transparent_70%)] pointer-events-none" 
       />
-      <div className="absolute top-1/4 -left-32 w-[550px] h-[550px] bg-purple-200/40 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute top-1/3 -right-32 w-[550px] h-[550px] bg-cyan-200/40 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute top-1/4 -left-32 w-[550px] h-[550px] bg-[radial-gradient(circle,rgba(168,85,247,0.12),transparent_70%)] pointer-events-none" />
+      <div className="absolute top-1/3 -right-32 w-[550px] h-[550px] bg-[radial-gradient(circle,rgba(6,182,212,0.12),transparent_70%)] pointer-events-none" />
 
       {/* 3. Floating Kinetic Tech Badges in Orbit */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden max-w-7xl mx-auto hidden lg:block">
